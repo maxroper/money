@@ -1,0 +1,3237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#070d1a" />
+  <title>Portfolio Dashboard</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { background: #070d1a; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+    #root { height: 100%; display: flex; flex-direction: column; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel" data-presets="react">
+    const { useState, useEffect, useMemo } = React;
+
+import { useState, useEffect, useMemo } from "react";
+const D = {
+  asOf: "April 16, 2026",
+
+  nw:    {"2021-10":23383961,"2021-11":23251679,"2021-12":23158094,"2022-01":22663887,"2022-02":22303624,"2022-03":22405920,"2022-04":21399210,"2022-05":20945862,"2022-06":20808029,"2022-07":21672682,"2022-08":20682760,"2022-09":20591033,"2022-10":20400000,"2022-11":20100000,"2022-12":19900000,"2023-01":19600000,"2023-02":19400000,"2023-03":19300000,"2023-04":19100000,"2023-05":18900000,"2023-06":19000000,"2023-07":19200000,"2023-08":19100000,"2023-09":19000000,"2023-10":18900000,"2023-11":19100000,"2023-12":19300000,"2024-01":19217650,"2024-02":18939270,"2024-03":19204811,"2024-04":19007701,"2024-05":18426264,"2024-06":18765739,"2024-07":19089883,"2024-08":19205851,"2024-09":19404331,"2024-10":19694062,"2024-11":19157211,"2024-12":19820752,"2025-01":19556999,"2025-02":19584977,"2025-03":19164026,"2025-04":18564525,"2025-05":18382246,"2025-06":18807865,"2025-07":18951987,"2025-08":18718388,"2025-09":19104806,"2025-10":19838513,"2025-11":19915663,"2025-12":19796373,"2026-01":20207563,"2026-02":20221522,"2026-03":19910848,"2026-04":19716233},
+
+  spend: {"2021-10":51675,"2021-11":68867,"2021-12":71830,"2022-01":85605,"2022-02":80922,"2022-03":198780,"2022-04":181776,"2022-05":114894,"2022-06":177359,"2022-07":204029,"2022-08":143209,"2022-09":208158,"2022-10":231790,"2022-11":132985,"2022-12":126854,"2023-01":183125,"2023-02":157936,"2023-03":203156,"2023-04":262158,"2023-05":189201,"2023-06":168112,"2023-07":179156,"2023-08":200599,"2023-09":124580,"2023-10":156476,"2023-11":173412,"2023-12":122975,"2024-01":158209,"2024-02":130829,"2024-03":120367,"2024-04":118761,"2024-05":121066,"2024-06":129111,"2024-07":115578,"2024-08":128360,"2024-09":118431,"2024-10":143472,"2024-11":123907,"2024-12":117781,"2025-01":126164,"2025-02":124429,"2025-03":126571,"2025-04":123635,"2025-05":118969,"2025-06":119066,"2025-07":124276,"2025-08":124630,"2025-09":124637,"2025-10":111363,"2025-11":123698,"2025-12":121362,"2026-01":118463,"2026-02":111530,"2026-03":122978,"2026-04":99187},
+
+  cats:  {"Travel & Hotels":4037274,"Flights":875849,"Dining":579948,"Shopping":386419,"Gifts & Personal":317904,"Home & HOA":218902,"Wine":185973,"Entertainment":134858,"Insurance":116880,"Transport":107780,"Health & Medical":50838,"Other":684732},
+
+  groups:[
+    {name:"UBS Investments", value:18817852, color:"#60a5fa", accounts:[
+      {name:"Brokerage/Chkg (...4463)",value:6386837},{name:"SP 500 TLH (...4474)",value:4950425},
+      {name:"Sector Tilts (...4473)",value:2786775},{name:"PMP FI (...4462)",value:1830300},
+      {name:"Preferreds (...4472)",value:1372750},{name:"Franklin Muni (...4471)",value:1020945},
+      {name:"Emerging Mkts (...4470)",value:241723},{name:"Jennison Intl (...4461)",value:228098},
+    ]},
+    {name:"Real Estate",      value:3526100,  color:"#34d399", accounts:[
+      {name:"Miami",value:3526100},
+    ]},
+    {name:"Personal Invest.", value:2705925,  color:"#a78bfa", accounts:[
+      {name:"E*Trade (...1606)",value:1820488},{name:"Coinbase",value:235392},
+      {name:"Wine",value:100000},{name:"Tesla Model S",value:45491},
+      {name:"Redbrick",value:1000000},{name:"Ankona",value:650045},
+    ]},
+    {name:"Retirement",       value:272536,   color:"#fbbf24", accounts:[
+      {name:"IRRA-Edge (...5G53)",value:146710},{name:"Roth IRA (...6Y10)",value:55706},
+      {name:"401(k) (...5283)",value:53619},{name:"IRA (...7161)",value:16502},
+    ]},
+    {name:"Cash & Banking",   value:175521,   color:"#f472b6", accounts:[
+      {name:"Checking (...9778)",value:61968},{name:"Savings (...2323)",value:52904},
+      {name:"BofA Checking",value:41859},
+      {name:"BofA - M",value:8113},{name:"Savings",value:4700},{name:"BofA Savings",value:1977},
+    ]},
+    {name:"Liabilities",      value:-7239935, color:"#f87171", accounts:[
+      {name:"UBS Bank USA (...7200)",value:-4238482},{name:"UBS Bank USA (...1300)",value:-3000000},
+      {name:"Credit Cards",value:-1454},
+    ]},
+  ],
+};
+const NW2022 = {"2022-01":22663887,"2022-02":22303624,"2022-03":22405920,"2022-04":21399210,"2022-05":20945862,"2022-06":20808029,"2022-07":21672682,"2022-08":20682760,"2022-09":20591033,"2022-10":20400000,"2022-11":20100000,"2022-12":19900000,"2023-01":19600000,"2023-02":19400000,"2023-03":19300000,"2023-04":19100000,"2023-05":18900000,"2023-06":19000000,"2023-07":19200000,"2023-08":19100000,"2023-09":19000000,"2023-10":18900000,"2023-11":19100000,"2023-12":19300000,"2024-01":19217650,"2024-02":18939270,"2024-03":19204811,"2024-04":19007701,"2024-05":18426264,"2024-06":18765739,"2024-07":19089883,"2024-08":19205851,"2024-09":19404331,"2024-10":19694062,"2024-11":19157211,"2024-12":19820752,"2025-01":19556999,"2025-02":19584977,"2025-03":19164026,"2025-04":18564525,"2025-05":18382246,"2025-06":18807865,"2025-07":18951987,"2025-08":18718388,"2025-09":19104806,"2025-10":19838513,"2025-11":19915663,"2025-12":19796373,"2026-01":20207563,"2026-02":20221522,"2026-03":19910848,"2026-04":19716233};
+const SP2022 = {"2022-01":85605,"2022-02":80922,"2022-03":198780,"2022-04":181776,"2022-05":114894,"2022-06":177359,"2022-07":204029,"2022-08":143209,"2022-09":208158,"2022-10":231790,"2022-11":132985,"2022-12":126854,"2023-01":183125,"2023-02":157936,"2023-03":203156,"2023-04":262158,"2023-05":189201,"2023-06":168112,"2023-07":179156,"2023-08":200599,"2023-09":124580,"2023-10":156476,"2023-11":173412,"2023-12":122975,"2024-01":158209,"2024-02":130829,"2024-03":120367,"2024-04":118761,"2024-05":121066,"2024-06":129111,"2024-07":115578,"2024-08":128360,"2024-09":118431,"2024-10":143472,"2024-11":123907,"2024-12":117781,"2025-01":126164,"2025-02":124429,"2025-03":126571,"2025-04":123635,"2025-05":118969,"2025-06":119066,"2025-07":124276,"2025-08":124630,"2025-09":124637,"2025-10":111363,"2025-11":123698,"2025-12":121362,"2026-01":118463,"2026-02":111530,"2026-03":122978,"2026-04":99187};
+const P = {
+  planDate:      "Aug 12, 2025",
+  investAssets:  21960805,
+  portReturn:    7.42,
+  targetReturn:  7.70,
+  stdDev:        9.90,
+  bearMarket:    -29,
+  retireGoal:    1200000,
+
+  spotonBull:    15000000,
+  spotonBear:    10000000,
+  spotonYear:    2029,
+  redbrick:      2400000,
+  futureIncome:  250000,
+  ssMax:         35000,
+  ssHailey:      17500,
+  ssAge:         67,
+  currentAge:    38,
+
+  allocCurrent: {cash:2.46, fixedIncome:22.32, equity:43.03, nonTrad:32.19, other:0},
+  allocTarget:  {cash:0,   fixedIncome:28.0, equity:52.0, nonTrad:20.0, other:0.0},
+};
+
+const CONDO = {
+  address:          "4775 Collins Ave #3503, Miami Beach FL 33140",
+  building:         "Green Diamond",
+  sqft:             1980, beds:3, baths:3, floor:35, yearBuilt:2000,
+  purchasePrice:    3000000,
+  renovationCost:    640000,
+  totalBasis:       3640000,
+  mortgageBalance:  3000000,
+  mortgageIntMo:      14375,
+  hoa:             2048.92,
+  propertyTaxMo:      3691,
+  totalMo:         20114.92,
+  annualCost:     241379.04,
+  zillowEst:        3500000,
+  renoAdjusted:     3500000,
+  highEstimate:     4000000,
+  mktPricePerSqft:    1435,
+  daysOnMarket:         88,
+  marketTrend:      "buyer",
+};
+
+const T = {
+  bg:"#070d1a", surf:"#0f172a", border:"#1e293b", deep:"#030810",
+  txt:"#f1f5f9", muted:"#94a3b8", dim:"#475569",
+  blue:"#60a5fa", green:"#34d399", red:"#f87171",
+  yellow:"#fbbf24", purple:"#a78bfa", pink:"#f472b6",
+};
+const FED_TAX     = 0.238;
+const MONTHLY_SPEND = 120000;
+const ANNUAL_SPEND  = MONTHLY_SPEND * 12;
+const NET_RATE    = (P.portReturn / 100) * (1 - FED_TAX);
+const S = {
+  inset: { background:T.deep, border:"1px solid #1e293b", borderRadius:8, padding:"10px 12px" },
+  mono:  { fontFamily:"monospace" },
+  label: { fontSize:9, color:"#475569", fontFamily:"monospace", textTransform:"uppercase",
+           letterSpacing:1.5, marginBottom:4 },
+};
+
+const CC = {
+  "Travel & Hotels":"#60a5fa","Flights":"#38bdf8","Dining":"#34d399",
+  "Shopping":"#fbbf24","Gifts & Personal":"#f472b6","Home & HOA":"#86efac",
+  "Wine":"#c084fc","Entertainment":"#a78bfa","Insurance":"#94a3b8",
+  "Transport":"#fb923c","Health & Medical":"#2dd4bf","Other":"#64748b",
+};
+const ETRADE = {
+  asOf:       "Mar 31, 2026",
+  total:      1713441,
+  costBasis:  402545,
+  unrealized: 1302876,
+  holdings: [
+    { ticker:"TSLA", name:"Tesla Inc",            qty:3180, price:371.75, value:1182165, gain:984319  },
+    { ticker:"AAPL", name:"Apple Inc",            qty:1308, price:253.79, value:331957,  gain:198800  },
+    { ticker:"META", name:"Meta Platforms",        qty:150,  price:572.13, value:85820,   gain:59413   },
+    { ticker:"LYV",  name:"Live Nation",           qty:170,  price:152.51, value:25927,   gain:19127   },
+    { ticker:"CNO",  name:"CNO Financial",         qty:500,  price:41.06,  value:20530,   gain:19282   },
+    { ticker:"VOO",  name:"Vanguard S&P 500 ETF",  qty:20,   price:597.55, value:11951,   gain:6939    },
+    { ticker:"ZM",   name:"Zoom Communications",   qty:40,   price:80.39,  value:3216,    gain:-13478  },
+    { ticker:"F",    name:"Ford Motor",            qty:150,  price:11.54,  value:1731,    gain:827     },
+    { ticker:"AMZN", name:"Amazon",                qty:null, price:null,   value:null,    gain:null    },
+  ],
+};
+const TABS = [
+  {id:"overview", icon:"◈", label:"Overview"},
+  {id:"spending",  icon:"$",  label:"Spending"},
+  {id:"networth",  icon:"↗", label:"Net Worth"},
+  {id:"vsworld",   icon:"🌍", label:"vs World"},
+  {id:"insights",  icon:"⚡", label:"Insights"},
+  {id:"spoton",    icon:"📊", label:"SpotOn"},
+  {id:"ubsperf",   icon:"🏦", label:"UBS"},
+  {id:"condo",     icon:"🏠", label:"Condo"},
+];
+function fmt(n, short) {
+  if (short) {
+    const a = Math.abs(n);
+    if (a >= 1e6) return "$" + (n / 1e6).toFixed(1) + "M";
+    if (a >= 1e3) return "$" + (n / 1e3).toFixed(0) + "K";
+    return "$" + Math.round(n);
+  }
+  return new Intl.NumberFormat("en-US", { style:"currency", currency:"USD", maximumFractionDigits:0 }).format(n);
+}
+
+function NWChart({ data, color, h }) {
+  color = color || T.blue; h = h || 100;
+  const vals = Object.values(data);
+  const keys = Object.keys(data);
+  const mn = Math.min.apply(null, vals);
+  const mx = Math.max.apply(null, vals);
+  const rng = mx - mn || 1;
+  const [hov, setHov] = useState(null);
+
+  const W = 100, H = h, PAD = 4;
+  function xOf(i) { return PAD + (i / (vals.length - 1)) * (W - PAD * 2); }
+  function yOf(v) { return PAD + (1 - (v - mn) / rng) * (H - PAD * 2); }
+
+  const pts = vals.map(function(v, i) { return xOf(i) + "," + yOf(v); });
+  const gradId = "nwg" + color.replace("#","");
+  const taxIdx = keys.indexOf("2022-04");
+
+  return (
+    <div style={{ position:"relative", userSelect:"none", WebkitUserSelect:"none" }}>
+      <svg viewBox={"0 0 " + W + " " + H} preserveAspectRatio="none"
+        style={{ width:"100%", height:H, display:"block", touchAction:"none" }}
+        onMouseLeave={function(){ setHov(null); }}>
+        <defs>
+          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity="0.28" />
+            <stop offset="100%" stopColor={color} stopOpacity="0.02" />
+          </linearGradient>
+        </defs>
+
+        {/* subtle grid lines only — no labels */}
+        {[0.25, 0.5, 0.75].map(function(f) {
+          var y = PAD + f * (H - PAD * 2);
+          return <line key={f} x1={PAD} y1={y} x2={W-PAD} y2={y}
+            stroke={T.border} strokeWidth="0.3" vectorEffect="non-scaling-stroke" />;
+        })}
+
+        {/* Tax event marker */}
+        {false && taxIdx >= 0 && (
+          <line x1={xOf(taxIdx)} y1={PAD} x2={xOf(taxIdx)} y2={H - PAD}
+            stroke="#f87171" strokeWidth="0.8" strokeDasharray="1.2,1"
+            vectorEffect="non-scaling-stroke" />
+        )}
+
+        {/* Area + line */}
+        <path d={"M" + pts[0] + " L" + pts.join(" L") +
+          " L" + xOf(vals.length-1) + "," + (H-PAD) + " L" + xOf(0) + "," + (H-PAD) + " Z"}
+          fill={"url(#" + gradId + ")"} />
+        <path d={"M" + pts.join(" L")} fill="none" stroke={color} strokeWidth="1.8"
+          vectorEffect="non-scaling-stroke" />
+
+        {/* Hover hit areas */}
+        {vals.map(function(v, i) {
+          var slotW = (W - PAD * 2) / Math.max(vals.length - 1, 1);
+          return (
+            <rect key={i} x={xOf(i) - slotW/2} y={0} width={slotW} height={H}
+              fill="transparent"
+              onMouseEnter={function(){ setHov(i); }}
+              onTouchStart={function(e){ e.preventDefault(); setHov(i); }}
+              style={{ cursor:"crosshair" }} />
+          );
+        })}
+
+        {/* Hover dot + vertical line */}
+        {hov !== null && (
+          <g>
+            <line x1={xOf(hov)} y1={PAD} x2={xOf(hov)} y2={H-PAD}
+              stroke={color} strokeWidth="0.5" strokeDasharray="1,1"
+              vectorEffect="non-scaling-stroke" />
+            <circle cx={xOf(hov)} cy={yOf(vals[hov])} r="2" fill={color} />
+          </g>
+        )}
+      </svg>
+
+      {/* Tooltip */}
+      {hov !== null && (function() {
+        var xPct = (xOf(hov) / W) * 100;
+        var chg = hov > 0 ? vals[hov] - vals[hov-1] : 0;
+        return (
+          <div style={{
+            position:"absolute", top:6,
+            left: xPct < 65 ? "auto" : "auto",
+            ...(xPct < 65 ? { left:"52%" } : { left:"2%" }),
+            background:"rgba(15,23,42,0.97)",
+            border:"1px solid " + T.border,
+            borderRadius:8, padding:"7px 11px",
+            pointerEvents:"none", zIndex:10, minWidth:118
+          }}>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:3 }}>{keys[hov]}</div>
+            <div style={{ fontSize:15, fontWeight:700, color:T.txt, fontFamily:"monospace" }}>
+              {fmt(vals[hov], true)}
+            </div>
+            {chg !== 0 && (
+              <div style={{ fontSize:10, color:chg>0?T.green:T.red, fontFamily:"monospace", marginTop:2 }}>
+                {chg>0?"▲":"▼"} {fmt(Math.abs(chg), true)}
+              </div>
+            )}
+          </div>
+        );
+      })()}
+    </div>
+  );
+}
+
+function Bars({ data, color, h }) {
+  color = color || T.blue; h = h || 80;
+  const vals = Object.values(data);
+  const keys = Object.keys(data);
+  const mx = Math.max.apply(null, vals);
+  const [hov, setHov] = useState(null);
+  return (
+    <div style={{ position:"relative" }}>
+      {hov !== null && (
+        <div style={{ position:"absolute", top:0, left:0, right:0,
+          display:"flex", justifyContent:"center", pointerEvents:"none", zIndex:10 }}>
+          <div style={{ fontSize:10, color:T.txt, background:"rgba(15,23,42,0.97)",
+            padding:"4px 10px", borderRadius:6, fontFamily:"monospace",
+            border:"1px solid "+T.border, whiteSpace:"nowrap" }}>
+            {keys[hov] && keys[hov].slice(2)} · {fmt(vals[hov],true)}
+          </div>
+        </div>
+      )}
+      <div style={{ display:"flex", alignItems:"flex-end", gap:2, height:h, width:"100%" }}>
+        {vals.map(function(v, i) {
+          const bh = Math.max(2, (v / mx) * (h - 20));
+          const isH = hov === i;
+          return (
+            <div key={keys[i]} style={{ flex:1, display:"flex", flexDirection:"column",
+              alignItems:"center", gap:0, cursor:"pointer", height:"100%", justifyContent:"flex-end" }}
+              onTouchStart={function() { setHov(isH ? null : i); }}
+              onMouseEnter={function() { setHov(i); }}
+              onMouseLeave={function() { setHov(null); }}>
+              <div style={{ width:"100%", height:bh,
+                background:isH?"#93c5fd":color, borderRadius:"3px 3px 0 0",
+                transition:"background 0.1s" }} />
+              <div style={{ fontSize:6, color:isH?T.blue:T.dim, fontFamily:"monospace",
+                transform:"rotate(-45deg)", transformOrigin:"center",
+                whiteSpace:"nowrap", marginTop:3, height:14 }}>
+                {keys[i].slice(5)}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function Donut({ data, size }) {
+  size = size || 150;
+  const entries = Object.entries(data).filter(function(e) { return e[1] > 0; });
+  const total = entries.reduce(function(s, e) { return s + e[1]; }, 0);
+  const cx = size / 2, cy = size / 2, r = size * 0.38, inn = size * 0.24;
+  const [hov, setHov] = useState(null);
+  let ang = -90;
+  const slices = entries.map(function(e) {
+    const lbl = e[0], val = e[1];
+    const pct = val / total, sw = pct * 360;
+    const a1 = ang * Math.PI / 180, a2 = (ang + sw) * Math.PI / 180;
+    const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+    const x2 = cx + r * Math.cos(a2), y2 = cy + r * Math.sin(a2);
+    const xi1 = cx + inn * Math.cos(a1), yi1 = cy + inn * Math.sin(a1);
+    const xi2 = cx + inn * Math.cos(a2), yi2 = cy + inn * Math.sin(a2);
+    const lg = sw > 180 ? 1 : 0;
+    const path = "M" + xi1 + "," + yi1 + " L" + x1 + "," + y1 +
+      " A" + r + "," + r + " 0 " + lg + " 1 " + x2 + "," + y2 +
+      " L" + xi2 + "," + yi2 + " A" + inn + "," + inn + " 0 " + lg + " 0 " + xi1 + "," + yi1 + " Z";
+    ang += sw;
+    return { lbl, val, pct, path, color: CC[lbl] || T.muted };
+  });
+  const act = hov !== null ? slices[hov] : null;
+  return (
+    <svg width={size} height={size} style={{ display:"block", margin:"0 auto", touchAction:"none" }}>
+      {slices.map(function(s, i) {
+        return (
+          <path key={s.lbl} d={s.path} fill={s.color}
+            opacity={hov === null || hov === i ? 1 : 0.3}
+            onTouchStart={function() { setHov(hov === i ? null : i); }}
+            onMouseEnter={function() { setHov(i); }}
+            onMouseLeave={function() { setHov(null); }}
+            style={{ cursor:"pointer", transition:"opacity 0.15s" }} />
+        );
+      })}
+      <text x={cx} y={cy - 4} textAnchor="middle" fontSize="11" fontWeight="700"
+        fill={T.txt} fontFamily="sans-serif">
+        {act ? ((act.pct * 100).toFixed(0) + "%") : fmt(total, true)}
+      </text>
+      <text x={cx} y={cy + 10} textAnchor="middle" fontSize="5" fill={T.muted} fontFamily="monospace">
+        {act ? act.lbl.toUpperCase() : "TOTAL SPENT"}
+      </text>
+    </svg>
+  );
+}
+function Card({ children, style }) {
+  return (
+    <div style={Object.assign({ background:T.surf, border:"1px solid " + T.border,
+      borderRadius:14, padding:16, marginBottom:12 }, style || {})}>
+      {children}
+    </div>
+  );
+}
+function Lbl({ children }) {
+  return (
+    <div style={{ fontSize:10, fontWeight:600, letterSpacing:2, textTransform:"uppercase",
+      color:T.dim, fontFamily:"monospace", marginBottom:8 }}>
+      {children}
+    </div>
+  );
+}
+function Big({ v, size, color }) {
+  return (
+    <div style={{ fontSize:size || 24, fontWeight:700, letterSpacing:-0.5,
+      color:color || T.txt, lineHeight:1.1 }}>
+      {v}
+    </div>
+  );
+}
+function Chg({ pos, children }) {
+  return (
+    <div style={{ fontSize:11, color:pos ? T.green : T.red, fontFamily:"monospace", marginTop:3 }}>
+      {children}
+    </div>
+  );
+}
+function KpiGrid({ items, wide }) {
+  const cols = wide && items.length >= 4 ? "1fr 1fr 1fr 1fr" : "1fr 1fr";
+  return (
+    <div style={{ display:"grid", gridTemplateColumns:cols, gap:10, marginBottom:12 }}>
+      {items.map(function(item) {
+        return (
+          <Card key={item.label} style={{ marginBottom:0, padding:"14px 12px" }}>
+            <Lbl>{item.label}</Lbl>
+            <Big v={item.value} size={18} />
+            {item.sub && <Chg pos={item.pos}>{item.sub}</Chg>}
+          </Card>
+        );
+      })}
+    </div>
+  );
+}
+function WideGrid({ wide, children }) {
+  if (!wide) return <>{children}</>;
+  const arr = React.Children.toArray(children);
+  const left = arr.filter(function(_,i){ return i%2===0; });
+  const right = arr.filter(function(_,i){ return i%2===1; });
+  return (
+    <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:0, alignItems:"start" }}>
+      <div style={{ paddingRight:8 }}>{left}</div>
+      <div style={{ paddingLeft:8 }}>{right}</div>
+    </div>
+  );
+}
+function Overview({ derived, wide }) {
+  const { curNW, nwDelta, nwDeltaPct, curSpend, avgSpend, totalAssets, totalLiab } = derived;
+
+  const nwArr    = Object.entries(NW2022);
+  const nwStart  = nwArr[0][1];
+  const nwGain   = curNW - nwStart;
+  const nwRetPct = ((nwGain / nwStart) * 100).toFixed(1);
+  const nwPeak   = Math.max.apply(null, Object.values(NW2022));
+  const nwPeakMo = Object.entries(NW2022).find(function(e){ return e[1]===nwPeak; })[0];
+  const fromPeak = curNW - nwPeak;
+  const fromPeakPct = ((fromPeak / nwPeak) * 100).toFixed(1);
+
+  const totalSpend  = Object.values(SP2022).reduce(function(a,b){ return a+b; },0);
+  const annualSpend = avgSpend * 12;
+  const investable  = curNW - D.groups.find(function(g){ return g.name==="Real Estate"; }).value;
+
+  const debtRatio   = (totalLiab / totalAssets * 100).toFixed(1);
+  const solvency    = (curNW / totalAssets * 100).toFixed(1);
+
+  function Row({ label, value, color, sub }) {
+    return (
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+        padding:"10px 0", borderBottom:"1px solid "+T.border }}>
+        <div>
+          <div style={{ fontSize:12, color:T.txt }}>{label}</div>
+          {sub && <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginTop:1 }}>{sub}</div>}
+        </div>
+        <div style={{ fontSize:13, fontWeight:700, fontFamily:"monospace", color:color||T.txt }}>{value}</div>
+      </div>
+    );
+  }
+
+  return (
+    <WideGrid wide={wide}>
+
+      {/* NW HERO */}
+      <Card style={{ background:"linear-gradient(135deg,#0a1628 0%,#0f172a 100%)",
+        border:"1px solid #1e3a5f", padding:"18px 16px", marginBottom:12 }}>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", letterSpacing:2,
+          textTransform:"uppercase", marginBottom:6 }}>Net Worth · {D.asOf}</div>
+        <div style={{ fontSize:36, fontWeight:700, letterSpacing:-1, color:T.txt, marginBottom:6 }}>
+          {fmt(curNW)}
+        </div>
+        <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
+          <span style={{ fontSize:11, fontFamily:"monospace",
+            color:nwDelta>=0?T.green:T.red }}>
+            {nwDelta>=0?"▲":"▼"} {fmt(Math.abs(nwDelta),true)} this month
+          </span>
+          <span style={{ fontSize:11, fontFamily:"monospace",
+            color:nwGain>=0?T.green:T.red }}>
+            {nwGain>=0?"▲":"▼"} {fmt(Math.abs(nwGain),true)} since Oct '21 ({nwRetPct}%)
+          </span>
+        </div>
+        {/* Progress bar from start to current */}
+        <div style={{ marginTop:14 }}>
+          <div style={{ display:"flex", justifyContent:"space-between", fontSize:9,
+            color:T.dim, fontFamily:"monospace", marginBottom:4 }}>
+            <span>Start {fmt(nwStart,true)}</span>
+            <span>Peak {fmt(nwPeak,true)}</span>
+          </div>
+          <div style={{ height:6, background:T.deep, borderRadius:3, position:"relative" }}>
+            {/* Peak marker */}
+            <div style={{ position:"absolute", top:0, bottom:0,
+              left:(nwPeak/nwPeak*100)+"%", width:2, background:"#f59e0b40", borderRadius:1 }}/>
+            {/* Current fill */}
+            <div style={{ height:6, width:Math.min(curNW/nwPeak*100,100)+"%",
+              background:T.blue, borderRadius:3 }}/>
+          </div>
+          <div style={{ display:"flex", justifyContent:"space-between", fontSize:9,
+            color:T.dim, fontFamily:"monospace", marginTop:4 }}>
+            <span>Current {fmt(curNW,true)}</span>
+            <span style={{ color:"#f59e0b" }}>{fromPeakPct}% from peak</span>
+          </div>
+        </div>
+      </Card>
+
+      {/* NW CHART */}
+      <Card>
+        <Lbl>Net Worth History — Jan 2022 to Apr 2026</Lbl>
+        <NWChart data={NW2022} color={T.blue} h={100} />
+        <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:6 }}>
+          Jan 2022 onward · UBS loan adjusted · Hover/tap for details
+        </div>
+      </Card>
+
+      {/* BALANCE SHEET SNAPSHOT */}
+      <Card>
+        <Lbl>Balance Sheet</Lbl>
+        <Row label="Total Assets"     value={fmt(totalAssets,true)} color={T.green} />
+        <Row label="Total Liabilities" value={"-"+fmt(totalLiab,true)} color={T.red}
+          sub="UBS credit lines" />
+        <Row label="Net Worth"         value={fmt(curNW,true)} color={T.blue} />
+        <Row label="Debt / Assets"     value={debtRatio+"%"}
+          color={parseFloat(debtRatio)<30?T.green:"#f59e0b"}
+          sub={parseFloat(debtRatio)<30?"Conservative leverage":"Moderate"} />
+        <Row label="Solvency Ratio"    value={solvency+"%"}
+          color={parseFloat(solvency)>70?T.green:T.muted}
+          sub="% of assets you own outright" />
+      </Card>
+
+      {/* ASSET GROUPS */}
+      <Card>
+        <Lbl>Asset Breakdown</Lbl>
+        {D.groups.map(function(g) {
+          const pct = (Math.abs(g.value) / (totalAssets + totalLiab)) * 100;
+          return (
+            <div key={g.name} style={{ marginBottom:10 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
+                <span style={{ fontSize:12, color:T.txt }}>{g.name}</span>
+                <span style={{ fontSize:12, fontFamily:"monospace",
+                  color:g.value<0?T.red:T.txt, fontWeight:600 }}>
+                  {g.value<0?"-":""}{fmt(Math.abs(g.value),true)}
+                </span>
+              </div>
+              <div style={{ height:5, background:T.deep, borderRadius:3 }}>
+                <div style={{ height:5, width:Math.min(pct,100)+"%",
+                  background:g.color, borderRadius:3 }}/>
+              </div>
+            </div>
+          );
+        })}
+      </Card>
+
+      {/* CASH FLOW & SPENDING */}
+      <Card>
+        <Lbl>Cash Flow Snapshot</Lbl>
+        <Row label="This Month"       value={fmt(curSpend,true)}    color={T.txt}
+          sub={curSpend<avgSpend?"▼ below avg — good":"▲ above avg"} />
+        <Row label="Monthly Average"  value={fmt(avgSpend,true)}    color={T.muted}
+          sub="16-month trailing avg" />
+        <Row label="Annual Run Rate"  value={fmt(annualSpend,true)} color={T.muted}
+          sub="avg × 12" />
+        <Row label="Total Spent Jan'24+" value={fmt(totalSpend,true)} color="#f59e0b"
+          sub="From Mint transaction data" />
+      </Card>
+
+      {/* RUNWAY */}
+      <Card>
+        <Lbl>Wealth Runway</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          How long assets last at $120K/mo spend with portfolio growth factored in
+        </div>
+        {(function() {
+          const annualSpd = ANNUAL_SPEND;
+
+          function netRate(gross) { return gross * (1 - FED_TAX); }
+
+          function yearsToDepletion(nw, annualSpend, rate) {
+            if (rate <= 0) return Math.floor(nw / annualSpend);
+            if (rate >= annualSpend / nw) return 999;
+            var bal = nw;
+            for (var yr = 0; yr < 200; yr++) {
+              bal = bal * (1 + rate) - annualSpend;
+              if (bal <= 0) return yr + 1;
+            }
+            return 999;
+          }
+
+          const scenarios = [
+            { label:"No growth (cash)",              rate:0,                  color:"#f87171" },
+            { label:"Conservative 3% (after-tax)",   rate:netRate(0.03),      color:"#f59e0b" },
+            { label:"UBS 7.4% after-tax ~5.7%",      rate:netRate(0.074),     color:"#34d399" },
+            { label:"UBS target 7.7% after-tax ~5.9%",rate:netRate(0.077),    color:"#60a5fa" },
+          ];
+
+          return (
+            <div>
+              {/* Full NW runway */}
+              <div style={{ background:T.deep, border:"1px solid "+T.border,
+                borderRadius:10, padding:"14px", marginBottom:14 }}>
+                <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace",
+                  marginBottom:10, letterSpacing:1 }}>FULL NW · {fmt(curNW,true)} ÷ $120K/mo</div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+                  {scenarios.map(function(s) {
+                    var yrs = yearsToDepletion(curNW, annualSpd, s.rate);
+                    var label = yrs >= 999 ? "∞ Sustainable" : yrs + " years";
+                    var isSustain = yrs >= 999;
+                    return (
+                      <div key={s.label} style={{ background:"#030810",
+                        border:"1px solid "+(isSustain?s.color+"40":T.border),
+                        borderRadius:8, padding:"10px 12px" }}>
+                        <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace",
+                          marginBottom:4 }}>{s.label}</div>
+                        <div style={{ fontSize:18, fontWeight:700, color:s.color }}>{label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Investable only runway */}
+              <div style={{ background:T.deep, border:"1px solid "+T.border,
+                borderRadius:10, padding:"14px" }}>
+                <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace",
+                  marginBottom:10, letterSpacing:1 }}>
+                  INVESTABLE ONLY · {fmt(investable,true)} (excl. real estate)
+                </div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+                  {scenarios.map(function(s) {
+                    var yrs = yearsToDepletion(investable, annualSpd, s.rate);
+                    var label = yrs >= 999 ? "∞ Sustainable" : yrs + " years";
+                    var isSustain = yrs >= 999;
+                    return (
+                      <div key={s.label} style={{ background:"#030810",
+                        border:"1px solid "+(isSustain?s.color+"40":T.border),
+                        borderRadius:8, padding:"10px 12px" }}>
+                        <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace",
+                          marginBottom:4 }}>{s.label}</div>
+                        <div style={{ fontSize:18, fontWeight:700, color:s.color }}>{label}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:8 }}>
+                ∞ = portfolio returns exceed spend · Rates shown after ~23.8% federal tax (LTCG + NIIT) · No FL state tax
+              </div>
+            </div>
+          );
+        })()}
+      </Card>
+
+      {/* WEALTH SUSTAINABILITY — HNW APPROACH */}
+      <Card>
+        <Lbl>Wealth Sustainability Analysis</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          Portfolio return vs spend rate · no employment income assumed
+        </div>
+        {(function() {
+          const annualSpd = ANNUAL_SPEND;
+          const portReturn    = P.portReturn / 100;
+          const portGross     = curNW * portReturn;
+          const portNet       = portGross * (1 - FED_TAX);
+          const redbrickInc   = P.redbrick;
+          const ssIncome      = P.ssMax + P.ssHailey;
+
+          const spendVsGross  = (annualSpd / portGross * 100).toFixed(0);
+          const spendVsNet    = (annualSpd / portNet  * 100).toFixed(0);
+          const selfFundNet   = portNet  >= annualSpd;
+          const selfFundGross = portGross >= annualSpd;
+          const withSS        = (portNet + ssIncome) >= annualSpd;
+
+          return (
+            <div>
+              {/* Key ratio — gross and net side by side */}
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:18 }}>
+                <div style={{ textAlign:"center", background:T.deep, borderRadius:12, padding:"14px 10px" }}>
+                  <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>
+                    GROSS (pre-tax)
+                  </div>
+                  <div style={{ fontSize:36, fontWeight:700, letterSpacing:-1, lineHeight:1,
+                    color:selfFundGross?T.green:"#f59e0b" }}>
+                    {spendVsGross}%
+                  </div>
+                  <div style={{ fontSize:10, color:T.dim, marginTop:4 }}>
+                    of {fmt(portGross,true)}/yr
+                  </div>
+                </div>
+                <div style={{ textAlign:"center", background:T.deep, borderRadius:12, padding:"14px 10px" }}>
+                  <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>
+                    AFTER-TAX (~23.8%)
+                  </div>
+                  <div style={{ fontSize:36, fontWeight:700, letterSpacing:-1, lineHeight:1,
+                    color:selfFundNet?T.green:"#f87171" }}>
+                    {spendVsNet}%
+                  </div>
+                  <div style={{ fontSize:10, color:T.dim, marginTop:4 }}>
+                    of {fmt(portNet,true)}/yr net
+                  </div>
+                </div>
+              </div>
+              <div style={{ fontSize:11, color:T.muted, textAlign:"center", marginBottom:18 }}>
+                {selfFundNet
+                  ? "✓ After-tax earnings cover $120K/mo"
+                  : withSS
+                  ? "After-tax earnings + SS covers spend at 67"
+                  : "Spend exceeds after-tax passive income today"}
+              </div>
+
+              {/* Income stack */}
+              {[
+                { label:"Portfolio gross @ 7.42%",         value:portGross,  color:"#94a3b8" },
+                { label:"– Federal tax (~23.8% LTCG+NIIT)", value:-(portGross-portNet), color:"#f87171", isTax:true },
+                { label:"= Portfolio net after-tax",        value:portNet,    color:"#60a5fa", isNet:true },
+                { label:"+ Social Security at 67",          value:ssIncome,   color:"#a78bfa" },
+                { label:"Your spend ($120K/mo)",            value:annualSpd,  color:"#f59e0b", isSpend:true },
+              ].map(function(r) {
+                var maxVal = portGross + ssIncome;
+                var w = Math.min(Math.abs(r.value) / maxVal * 100, 100);
+                var spendW = Math.min(annualSpd / maxVal * 100, 100);
+                return (
+                  <div key={r.label} style={{ marginBottom:10 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                      <span style={{ fontSize:11,
+                        color:r.isSpend?T.txt:r.isTax?"#f87171":r.isNet?"#60a5fa":T.muted,
+                        fontWeight:r.isNet||r.isSpend?600:400 }}>
+                        {r.label}
+                      </span>
+                      <span style={{ fontSize:12, fontFamily:"monospace", fontWeight:600, color:r.color }}>
+                        {r.isTax?"-":""}{fmt(Math.abs(r.value),true)}/yr
+                      </span>
+                    </div>
+                    {!r.isTax && (
+                      <div style={{ height:6, background:T.deep, borderRadius:3 }}>
+                        <div style={{ height:6,
+                          width:(r.isSpend?spendW:w)+"%",
+                          background:r.color, borderRadius:3,
+                          opacity:r.isSpend?1:r.isNet?1:0.6 }}/>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
+              {/* Redbrick */}
+              <div style={{ background:T.deep, border:"1px solid #fbbf2430",
+                borderRadius:8, padding:"10px 12px", marginTop:10, marginBottom:10 }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                  <div>
+                    <div style={{ fontSize:11, color:"#fbbf24", fontWeight:600 }}>🏢 Redbrick (2032)</div>
+                    <div style={{ fontSize:10, color:T.dim, marginTop:2 }}>
+                      One-time lump · boosts investable base · LTCG on gain
+                    </div>
+                  </div>
+                  <div style={{ fontSize:14, fontWeight:700, fontFamily:"monospace", color:"#fbbf24" }}>
+                    +{fmt(redbrickInc,true)}
+                  </div>
+                </div>
+              </div>
+
+              <div style={S.inset}>
+                <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>
+                  TAX NOTE · FLORIDA RESIDENT
+                </div>
+                <div style={{ fontSize:11, color:T.muted, lineHeight:1.6 }}>
+                  No FL state income tax. Federal: 20% LTCG + 3.8% NIIT on investment income at this wealth level = ~23.8% effective on portfolio returns.
+                  Gross {fmt(portGross,true)}/yr → net {fmt(portNet,true)}/yr.
+                  After-tax net covers {(portNet/annualSpd*100).toFixed(0)}% of $120K/mo spend.
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+      </Card>
+
+      {/* DRAWDOWN REALITY CHECK */}
+      <Card style={{ border:"1px solid #f59e0b40", background:"#f59e0b06" }}>
+        <Lbl>Current Drawdown Position</Lbl>
+        {(function(){
+          const portGross = curNW * (P.portReturn/100);
+          const portNet   = portGross * (1 - FED_TAX);
+          const gap       = ANNUAL_SPEND - portNet;
+          const gapMo     = Math.round(gap/12);
+          const drawPct   = (gap/ANNUAL_SPEND*100).toFixed(0);
+
+          var bal = curNW, yr = 0;
+          while (bal > curNW*0.9 && yr < 20) {
+            bal = bal*(1+NET_RATE) - ANNUAL_SPEND; yr++;
+          }
+          return (
+            <div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, marginBottom:12 }}>
+                {[
+                  { label:"Portfolio earns/yr (net)", value:fmt(portNet,true), color:"#60a5fa" },
+                  { label:"Annual spend",              value:fmt(ANNUAL_SPEND,true), color:"#f59e0b" },
+                  { label:"Annual gap",                value:"-"+fmt(gap,true), color:"#f87171" },
+                ].map(function(s){
+                  return (
+                    <div key={s.label} style={{ background:T.deep, border:"1px solid "+T.border,
+                      borderRadius:8, padding:"10px" }}>
+                      <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:3 }}>{s.label}</div>
+                      <div style={{ fontSize:14, fontWeight:700, color:s.color }}>{s.value}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ background:T.deep, border:"1px solid #f59e0b30",
+                borderRadius:8, padding:"10px 12px", fontSize:11, color:T.muted, lineHeight:1.7 }}>
+                Spending <span style={{ color:"#f87171", fontWeight:600 }}>{fmt(gapMo,true)}/mo</span> more
+                than the portfolio generates after tax — a {drawPct}% shortfall.
+                At this rate, principal erosion is gradual but real.
+                SpotOn ($10–15M, ~2029) and Redbrick ($2.4M, 2032) are the two catalysts
+                that would close this gap. Until then, every $10K/mo reduction in spend
+                saves ~{fmt(10000*12,true)}/yr and meaningfully extends the runway.
+              </div>
+            </div>
+          );
+        })()}
+      </Card>
+
+      {/* NW TRAJECTORY PROJECTION */}
+      {(function() {
+        const SPEND_YR = ANNUAL_SPEND;
+        const netRate = NET_RATE;
+        const TODAY_YR = 2026;
+        const YEARS    = 16;
+
+        function project(startNW, inflows) {
+          var pts = [startNW], bal = startNW;
+          for (var y = 1; y <= YEARS; y++) {
+            var yr = TODAY_YR + y;
+            bal = bal * (1 + netRate) - SPEND_YR;
+            inflows.forEach(function(ev){ if (ev.year === yr) bal += ev.amount; });
+            pts.push(Math.max(Math.round(bal), 0));
+          }
+          return pts;
+        }
+
+        var xLabels = [];
+        for (var i = 0; i <= YEARS; i++) xLabels.push(TODAY_YR + i);
+
+        var rb = { year:2032, amount:P.redbrick };
+        var sc2029_10 = { year:2029, amount:10000000 };
+        var sc2029_15 = { year:2029, amount:15000000 };
+
+        var scenarios = [
+          { label:"No SpotOn",   color:"#f87171", pts:project(curNW, [rb]) },
+          { label:"$10M (2029)", color:"#f59e0b", pts:project(curNW, [sc2029_10, rb]) },
+          { label:"$15M (2029)", color:"#34d399", pts:project(curNW, [sc2029_15, rb]) },
+        ];
+
+        const [hov, setHov] = useState(null);
+        var W = 100, H = 120, ML = 2, MR = 2, MT = 10, MB = 14;
+        var allVals = scenarios.reduce(function(a,s){ return a.concat(s.pts); }, []);
+        var mx = Math.max.apply(null, allVals) * 1.06;
+        var selfFundNW = SPEND_YR / netRate;
+
+        function xOf(i){ return ML + (i/YEARS)*(W-ML-MR); }
+        function yOf(v){ return MT + (1 - Math.max(v,0)/mx)*(H-MT-MB); }
+        function makePath(pts){ return "M"+pts.map(function(v,i){ return xOf(i)+","+yOf(v); }).join(" L"); }
+
+        return (
+          <Card>
+            <Lbl>NW Trajectory — 2026 to 2042</Lbl>
+            <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:10 }}>
+              After-tax net ~5.65% · $120K/mo spend · SpotOn modeled 2029 · Redbrick 2032 in all
+            </div>
+            <div style={{ position:"relative", userSelect:"none", WebkitUserSelect:"none" }}>
+
+              {/* Y-axis labels — HTML, not SVG, so they don't stretch */}
+              <div style={{ position:"absolute", left:0, top:0, bottom:MB+2,
+                display:"flex", flexDirection:"column", justifyContent:"space-between",
+                pointerEvents:"none", zIndex:2, paddingTop:MT }}>
+                {[1.0,0.75,0.5,0.25].map(function(f){
+                  return (
+                    <div key={f} style={{ fontSize:9, color:T.dim, fontFamily:"monospace",
+                      lineHeight:1, transform:"translateY(-50%)" }}>
+                      {"$"+(mx*f/1e6).toFixed(0)+"M"}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Self-fund label */}
+              {selfFundNW < mx && (function(){
+                var pct = (1 - selfFundNW/mx)*100;
+                var topPct = MT/H*100 + pct*(H-MT-MB)/H;
+                return (
+                  <div style={{ position:"absolute", right:4, top:topPct+"%",
+                    transform:"translateY(-100%)", fontSize:9, color:"#fbbf24",
+                    fontFamily:"monospace", pointerEvents:"none", zIndex:2 }}>
+                    self-fund
+                  </div>
+                );
+              })()}
+
+              <svg viewBox={"0 0 "+W+" "+(H+MB)} preserveAspectRatio="none"
+                style={{ width:"100%", height:H+MB, display:"block", touchAction:"none" }}
+                onMouseLeave={function(){ setHov(null); }}>
+                <defs>
+                  {scenarios.map(function(s){
+                    return (
+                      <linearGradient key={s.label} id={"tg"+s.label.replace(/\W/g,"")}
+                        x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={s.color} stopOpacity="0.18"/>
+                        <stop offset="100%" stopColor={s.color} stopOpacity="0"/>
+                      </linearGradient>
+                    );
+                  })}
+                </defs>
+
+                {/* Grid lines only — no text */}
+                {[0.25,0.5,0.75,1.0].map(function(f){
+                  var y = yOf(mx*f);
+                  return (
+                    <line key={f} x1={ML+8} y1={y} x2={W-MR} y2={y}
+                      stroke={T.border} strokeWidth="0.3" vectorEffect="non-scaling-stroke"/>
+                  );
+                })}
+
+                {/* Self-fund threshold line only */}
+                {selfFundNW < mx && (
+                  <line x1={ML+8} y1={yOf(selfFundNW)} x2={W-MR} y2={yOf(selfFundNW)}
+                    stroke="#fbbf24" strokeWidth="0.6" strokeDasharray="1.5,1"
+                    vectorEffect="non-scaling-stroke"/>
+                )}
+
+                {/* Redbrick marker — line only, label in HTML */}
+                <line x1={xOf(2032-TODAY_YR)} y1={MT} x2={xOf(2032-TODAY_YR)} y2={H-MB}
+                  stroke="#fbbf24" strokeWidth="0.4" strokeDasharray="1,1"
+                  vectorEffect="non-scaling-stroke"/>
+
+                {/* Area fills */}
+                {scenarios.map(function(s){
+                  return (
+                    <path key={s.label+"a"}
+                      d={makePath(s.pts)+" L"+xOf(YEARS)+","+(H-MB)+" L"+xOf(0)+","+(H-MB)+" Z"}
+                      fill={"url(#tg"+s.label.replace(/\W/g,"")+")"} />
+                  );
+                })}
+
+                {/* Lines */}
+                {scenarios.map(function(s){
+                  return (
+                    <path key={s.label+"l"} d={makePath(s.pts)}
+                      fill="none" stroke={s.color} strokeWidth="1.8"
+                      vectorEffect="non-scaling-stroke"/>
+                  );
+                })}
+
+                {/* Hover hit areas */}
+                {xLabels.map(function(yr,i){
+                  var sw = (W-ML-MR)/YEARS;
+                  return (
+                    <rect key={yr} x={xOf(i)-sw/2} y={MT} width={sw} height={H-MT-MB}
+                      fill="transparent" style={{ cursor:"crosshair" }}
+                      onMouseEnter={function(){ setHov(i); }}
+                      onTouchStart={function(e){ e.preventDefault(); setHov(i); }}/>
+                  );
+                })}
+
+                {/* Hover dots */}
+                {hov!==null && scenarios.map(function(s){
+                  var v=s.pts[hov];
+                  return v>0?<circle key={s.label} cx={xOf(hov)} cy={yOf(v)} r="2" fill={s.color}/>:null;
+                })}
+              </svg>
+
+              {/* X-axis labels — HTML below chart */}
+              <div style={{ display:"flex", justifyContent:"space-between",
+                paddingLeft:(ML/W*100)+"%", paddingRight:(MR/W*100)+"%", marginTop:2 }}>
+                {xLabels.filter(function(_,i){ return i%4===0 || i===YEARS; }).map(function(yr){
+                  return (
+                    <div key={yr} style={{ fontSize:9, color:T.dim, fontFamily:"monospace",
+                      textAlign:"center" }}>{yr}</div>
+                  );
+                })}
+              </div>
+
+              {/* Redbrick label */}
+              <div style={{ position:"absolute", bottom:MB+4,
+                left:((xOf(2032-TODAY_YR)/W)*100)+"%",
+                transform:"translateX(-50%)",
+                fontSize:8, color:"#fbbf24", fontFamily:"monospace",
+                pointerEvents:"none", zIndex:2 }}>RB</div>
+
+              {/* Tooltip */}
+              {hov!==null && (function(){
+                var xPct = xOf(hov)/W*100;
+                return (
+                  <div style={{ position:"absolute", top:8,
+                    ...(xPct<58?{left:"38%"}:{left:"2%"}),
+                    background:"rgba(15,23,42,0.97)", border:"1px solid "+T.border,
+                    borderRadius:8, padding:"8px 12px", pointerEvents:"none", zIndex:10,
+                    minWidth:140 }}>
+                    <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:5 }}>
+                      {xLabels[hov]}
+                    </div>
+                    {scenarios.map(function(s){
+                      var v=s.pts[hov];
+                      return (
+                        <div key={s.label} style={{ display:"flex", justifyContent:"space-between",
+                          gap:12, marginBottom:3 }}>
+                          <span style={{ fontSize:10, color:s.color }}>{s.label}</span>
+                          <span style={{ fontSize:11, fontFamily:"monospace", fontWeight:700, color:s.color }}>
+                            {v>0?fmt(v,true):"—"}
+                          </span>
+                        </div>
+                      );
+                    })}
+                    {hov===2032-TODAY_YR && (
+                      <div style={{ fontSize:9, color:"#fbbf24", marginTop:4 }}>↑ Redbrick lands</div>
+                    )}
+                    {hov===2029-TODAY_YR && (
+                      <div style={{ fontSize:9, color:"#f59e0b", marginTop:4 }}>↑ SpotOn assumed</div>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Legend */}
+            <div style={{ display:"flex", gap:14, flexWrap:"wrap", marginTop:10, alignItems:"center" }}>
+              {scenarios.map(function(s){
+                return (
+                  <div key={s.label} style={{ display:"flex", alignItems:"center", gap:5 }}>
+                    <div style={{ width:18, height:2, background:s.color, borderRadius:1 }}/>
+                    <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>{s.label}</span>
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:6, lineHeight:1.6 }}>
+              Yellow dashed = self-funding threshold (~${Math.round(selfFundNW/1e6*10)/10}M) · RB = Redbrick $2.4M (2032) · SpotOn modeled at 2029 · $30M UBS scenario excluded as market conditions have changed
+            </div>
+          </Card>
+        );
+      })()}
+
+    </WideGrid>
+  );
+}
+
+function Spending({ derived, wide }) {
+  const { curSpend, avgSpend } = derived;
+  const totalCats = Object.values(D.cats).reduce(function(a,b){ return a+b; }, 0);
+
+  const PARTIAL_YEARS = { "2026":4 };
+  const YEAR_NOTES = {
+    "2022":"Post-sale lifestyle shift",
+    "2023":"Peak spend year",
+    "2024":"Full year",
+    "2025":"Full year",
+    "2026":"Jan–Apr only",
+  };
+  const annualTotals = {};
+  Object.entries(SP2022).forEach(function([k,v]) {
+    var yr = k.slice(0,4);
+    annualTotals[yr] = (annualTotals[yr]||0) + v;
+  });
+  const annualRows = Object.entries(annualTotals).sort().map(function([yr, spend]) {
+    var months = PARTIAL_YEARS[yr] || 12;
+    return {
+      year:parseInt(yr), spend:Math.round(spend),
+      note:YEAR_NOTES[yr]+" · avg "+fmt(Math.round(spend/months),true)+"/mo",
+      partial:!!PARTIAL_YEARS[yr],
+    };
+  });
+  const maxAnnual = Math.max.apply(null, annualRows.map(function(r){ return r.spend; }));
+
+  const spendEntries = Object.entries(SP2022);
+  const byYear = {};
+  spendEntries.forEach(function(e) {
+    var yr = e[0].slice(0,4);
+    if (!byYear[yr]) byYear[yr] = {};
+    byYear[yr][e[0]] = e[1];
+  });
+
+  const spendVals = spendEntries.map(function(e){ return e[1]; });
+  const spendKeys = spendEntries.map(function(e){ return e[0]; });
+  const rolling = [];
+  for (var i = 0; i < spendVals.length; i++) {
+    if (i < 11) { rolling.push(null); continue; }
+    var sum = 0;
+    for (var j = i-11; j <= i; j++) sum += spendVals[j];
+    rolling.push(Math.round(sum / 12));
+  }
+
+  return (
+    <WideGrid wide={wide}>
+      <KpiGrid wide={wide} items={[
+        { label:"This Month",  value:fmt(curSpend,true), sub:(curSpend<avgSpend?"▼ ":"▲ ")+fmt(Math.abs(curSpend-avgSpend),true)+" vs 12mo avg", pos:curSpend<avgSpend },
+        { label:"12-Mo Avg",   value:fmt(avgSpend,true), sub:"Trailing 12 months", pos:true },
+      ]} />
+
+      {/* Rolling 12-month average chart */}
+      <Card>
+        <Lbl>Monthly Spend + 12-Month Rolling Average</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:10 }}>
+          Bars = monthly · Line = trailing 12-month avg · Hover/tap for details
+        </div>
+        {(function(){
+          const [hov2, setHov2] = useState(null);
+          var vals = spendVals;
+          var keys = spendKeys;
+          var mx2 = Math.max.apply(null, vals);
+          var W2=100, H2=90, ML2=2, MR2=2, MT2=6, MB2=12;
+
+          function xOf2(i){ return ML2 + (i/(vals.length-1))*(W2-ML2-MR2); }
+          function yOf2(v){ return MT2 + (1-(v/mx2))*(H2-MT2-MB2); }
+
+          var rollPts = rolling.map(function(v,i){
+            if (v===null) return null;
+            return xOf2(i)+","+yOf2(v);
+          }).filter(Boolean);
+          var rollPath = rollPts.length ? "M"+rollPts[0]+" L"+rollPts.slice(1).join(" L") : "";
+
+          return (
+            <div style={{ position:"relative", userSelect:"none", WebkitUserSelect:"none" }}>
+              <svg viewBox={"0 0 "+W2+" "+(H2+MB2)} preserveAspectRatio="none"
+                style={{ width:"100%", height:H2+MB2, display:"block", touchAction:"none" }}
+                onMouseLeave={function(){ setHov2(null); }}>
+
+                {/* Bars */}
+                {vals.map(function(v,i){
+                  var bh = Math.max(1, (v/mx2)*(H2-MT2-MB2));
+                  var x = xOf2(i);
+                  var bw = Math.max(0.4, (W2-ML2-MR2)/(vals.length)*0.8);
+                  var isH = hov2===i;
+                  return (
+                    <rect key={i}
+                      x={x-bw/2} y={H2-MB2-bh} width={bw} height={bh}
+                      fill={isH?"#93c5fd":T.blue} opacity={isH?1:0.5}
+                      style={{ cursor:"crosshair" }}
+                      onMouseEnter={function(){ setHov2(i); }}
+                      onTouchStart={function(e){ e.preventDefault(); setHov2(i); }}/>
+                  );
+                })}
+
+                {/* Rolling average line */}
+                {rollPath && (
+                  <path d={rollPath} fill="none" stroke="#f59e0b" strokeWidth="1.4"
+                    vectorEffect="non-scaling-stroke"/>
+                )}
+
+                {/* Hover dot on rolling line */}
+                {hov2!==null && rolling[hov2]!==null && (
+                  <circle cx={xOf2(hov2)} cy={yOf2(rolling[hov2])} r="2" fill="#f59e0b"/>
+                )}
+              </svg>
+
+              {/* X year labels — HTML so they don't stretch */}
+              <div style={{ position:"relative", height:14, marginTop:-MB2 }}>
+                {keys.map(function(k,i){
+                  if (!k.endsWith("-01")) return null;
+                  return (
+                    <div key={k} style={{
+                      position:"absolute",
+                      left:((xOf2(i)/W2)*100)+"%",
+                      transform:"translateX(-50%)",
+                      fontSize:9, color:T.dim, fontFamily:"monospace",
+                      whiteSpace:"nowrap"
+                    }}>{k.slice(0,4)}</div>
+                  );
+                })}
+              </div>
+
+              {/* Tooltip */}
+              {hov2!==null && (function(){
+                var xPct = xOf2(hov2)/W2*100;
+                var roll = rolling[hov2];
+                return (
+                  <div style={{ position:"absolute", top:4,
+                    ...(xPct<60?{left:"40%"}:{left:"2%"}),
+                    background:"rgba(15,23,42,0.97)", border:"1px solid "+T.border,
+                    borderRadius:8, padding:"7px 11px", pointerEvents:"none", zIndex:10 }}>
+                    <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>
+                      {keys[hov2]}
+                    </div>
+                    <div style={{ fontSize:13, fontWeight:700, color:T.blue, fontFamily:"monospace" }}>
+                      {fmt(vals[hov2],true)}
+                    </div>
+                    {roll && (
+                      <div style={{ fontSize:10, color:"#f59e0b", fontFamily:"monospace", marginTop:2 }}>
+                        12mo avg: {fmt(roll,true)}
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
+          );
+        })()}
+        <div style={{ display:"flex", gap:14, marginTop:8, alignItems:"center" }}>
+          <div style={{ display:"flex", alignItems:"center", gap:5 }}>
+            <div style={{ width:14, height:8, background:T.blue, borderRadius:2, opacity:0.5 }}/>
+            <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>Monthly spend</span>
+          </div>
+          <div style={{ display:"flex", alignItems:"center", gap:5 }}>
+            <div style={{ width:14, height:2, background:"#f59e0b", borderRadius:1 }}/>
+            <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>12-mo rolling avg</span>
+          </div>
+        </div>
+      </Card>
+
+      {/* Annual overview */}
+      <Card>
+        <Lbl>Annual Spending — Jan 2022 to Present</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          Mint (2022–Dec 2023) + transactions CSV (Jan 2024–Apr 2026) · excl. taxes, transfers, investments
+        </div>
+        {annualRows.map(function(r) {
+          var barW = r.spend / maxAnnual * 100;
+          var months = r.year===2026?4:12;
+          var monthlyAvg = Math.round(r.spend / months);
+          return (
+            <div key={r.year} style={{ marginBottom:14 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4, alignItems:"baseline" }}>
+                <div style={{ display:"flex", gap:8, alignItems:"center" }}>
+                  <span style={{ fontSize:13, fontWeight:700, color:T.txt }}>{r.year}</span>
+                  {r.partial && <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace",
+                    background:T.deep, padding:"1px 6px", borderRadius:6 }}>partial</span>}
+                </div>
+                <div style={{ textAlign:"right" }}>
+                  <span style={{ fontSize:13, fontWeight:700, fontFamily:"monospace", color:T.txt }}>
+                    {fmt(r.spend,true)}
+                  </span>
+                  <span style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginLeft:8 }}>
+                    {fmt(monthlyAvg,true)}/mo avg
+                  </span>
+                </div>
+              </div>
+              <div style={{ height:8, background:T.deep, borderRadius:3 }}>
+                <div style={{ height:8, width:barW+"%",
+                  background:r.year===2023?"#f87171":r.year===2022?"#f59e0b":r.year>=2024?"#60a5fa":T.muted,
+                  borderRadius:3 }}/>
+              </div>
+              <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:3 }}>{r.note}</div>
+            </div>
+          );
+        })}
+      </Card>
+
+      {/* Monthly bars — 2022 */}
+      <Card>
+        <Lbl>Monthly Spending — 2022</Lbl>
+        <Bars data={byYear["2022"]||{}} color="#94a3b8" h={80} />
+      </Card>
+
+      {/* Monthly bars — 2023 */}
+      <Card>
+        <Lbl>Monthly Spending — 2023</Lbl>
+        <Bars data={byYear["2023"]||{}} color="#f59e0b" h={80} />
+      </Card>
+
+      {/* Monthly bars — 2024–2026 */}
+      <Card>
+        <Lbl>Monthly Spending — 2024</Lbl>
+        <Bars data={byYear["2024"]||{}} color={T.blue} h={80} />
+      </Card>
+
+      <Card>
+        <Lbl>Monthly Spending — 2025–2026</Lbl>
+        <Bars data={Object.assign({}, byYear["2025"]||{}, byYear["2026"]||{})} color="#34d399" h={80} />
+      </Card>
+
+      {/* Category breakdown — all years */}
+      <Card>
+        <Lbl>By Category — Jan 2022 to Apr 2026</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:12 }}>
+          {fmt(totalCats,true)} total · Mint + transactions CSV · excl. taxes, transfers, loan interest
+        </div>
+        <Donut data={D.cats} size={150} />
+        <div style={{ marginTop:14 }}>
+          {Object.entries(D.cats).map(function(e) {
+            var cat = e[0], val = e[1];
+            return (
+              <div key={cat} style={{ display:"flex", alignItems:"center", gap:10, marginBottom:10 }}>
+                <div style={{ width:10, height:10, borderRadius:2, background:CC[cat]||T.muted, flexShrink:0 }}/>
+                <span style={{ flex:1, fontSize:12, color:T.txt }}>{cat}</span>
+                <span style={{ fontSize:11, color:T.muted, fontFamily:"monospace" }}>
+                  {(val/totalCats*100).toFixed(1)}%
+                </span>
+                <span style={{ fontSize:12, fontFamily:"monospace", minWidth:52, textAlign:"right" }}>
+                  {fmt(val,true)}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+    </WideGrid>
+  );
+}
+
+function NetWorth({ derived, wide }) {
+  const { curNW } = derived;
+  const nwArr = Object.entries(NW2022);
+  const first = nwArr[0][1];
+  const peak = Math.max.apply(null, Object.values(NW2022));
+  const peakMo = Object.entries(NW2022).find(function(e) { return e[1] === peak; })[0];
+  const totalRet = ((curNW - first) / first * 100).toFixed(1);
+  const nw25 = Object.entries(NW2022).filter(function(e) { return e[0] >= "2025-01"; });
+  const ret25 = ((nw25[nw25.length - 1][1] - nw25[0][1]) / nw25[0][1] * 100).toFixed(1);
+  const nwPre2024  = Object.fromEntries(Object.entries(NW2022).filter(function(e) { return e[0] < "2024-01"; }));
+  const nwPost2024 = Object.fromEntries(Object.entries(NW2022).filter(function(e) { return e[0] >= "2024-01"; }));
+
+  return (
+    <WideGrid wide={wide}>
+      <KpiGrid wide={wide} items={[
+        { label:"Current",       value:fmt(curNW, true),                       sub:"Apr 15, 2026",      pos:true },
+        { label:"Since Jan '22", value:(totalRet >= 0 ? "+" : "") + totalRet + "%", sub:"From " + fmt(first, true), pos:totalRet >= 0 },
+        { label:"Peak",          value:fmt(peak, true),                        sub:peakMo,              pos:true },
+        { label:"2025 Return",   value:(ret25 >= 0 ? "+" : "") + ret25 + "%",  sub:"Jan 25 → now",     pos:ret25 >= 0 },
+      ]} />
+
+      <Card>
+        <Lbl>Full History — Jan 2022 to Apr 2026</Lbl>
+        <NWChart data={NW2022} color={T.blue} h={120} />
+        <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:6 }}>
+          2021–Mar 2022 adjusted -$8.36M tax liability · Hover/tap any point for exact value
+        </div>
+      </Card>
+
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:12 }}>
+        <Card style={{ marginBottom:0 }}>
+          <Lbl>2022 – 2023</Lbl>
+          <Bars data={nwPre2024} color={T.purple} h={80} />
+        </Card>
+        <Card style={{ marginBottom:0 }}>
+          <Lbl>2024 – 2026</Lbl>
+          <Bars data={nwPost2024} color={T.blue} h={80} />
+        </Card>
+      </div>
+
+      <Card>
+        <Lbl>Month by Month</Lbl>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(4, 1fr)", gap:7 }}>
+          {nwArr.map(function(entry, i) {
+            const mo = entry[0], nw = entry[1];
+            const chg = i > 0 ? nw - nwArr[i - 1][1] : 0;
+            return (
+              <div key={mo} style={{ background:T.deep, border:"1px solid " + T.border,
+                borderRadius:8, padding:"8px 9px" }}>
+                <div style={{ fontSize:8.5, color:T.dim, fontFamily:"monospace", marginBottom:2 }}>{mo}</div>
+                <div style={{ fontSize:12, fontWeight:700, color:T.txt }}>{fmt(nw, true)}</div>
+                {chg !== 0 && (
+                  <div style={{ fontSize:8, color:chg > 0 ? T.green : T.red, fontFamily:"monospace" }}>
+                    {chg > 0 ? "+" : ""}{fmt(chg, true)}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+    </WideGrid>
+  );
+}
+function VsWorld({ derived, wide }) {
+  const { curNW, curSpend, avgSpend } = derived;
+  const annualSpend = avgSpend * 12;
+
+  const uhnwLow  = 30000000;
+  const uhnwMid  = 40000000;
+  const uhnwHigh = 50000000;
+  const toUhnwLow  = uhnwLow  - curNW;
+  const toUhnwMid  = uhnwMid  - curNW;
+  const toUhnwHigh = uhnwHigh - curNW;
+
+  const globalNW = [
+    { label:"Global Median",    value:8654,     color:"#334155", note:"GWR 2023" },
+    { label:"Global Top 10%",   value:100000,   color:"#64748b", note:"~$100K+" },
+    { label:"Global Top 1%",    value:1000000,  color:"#94a3b8", note:"~$1M+" },
+    { label:"HNW ($1M–$30M)",   value:5000000,  color:"#60a5fa", note:"22.8M people globally" },
+    { label:"UHNW ($30M+)",     value:30000000, color:"#f59e0b", note:"~218K people globally" },
+    { label:"You",              value:curNW,    color:"#34d399", note:"Apr 2026" },
+  ];
+
+  const usNW = [
+    { label:"US Median (40-44)", value:134382,   color:"#475569", note:"Fed SCF 2022" },
+    { label:"US Top 25%",        value:436892,   color:"#64748b", note:"Fed SCF 2022" },
+    { label:"US Top 10%",        value:1182580,  color:"#94a3b8", note:"Fed SCF 2022" },
+    { label:"US Top 5%",         value:3779600,  color:"#60a5fa", note:"Fed SCF 2022" },
+    { label:"US Top 1%",         value:13666778, color:"#a78bfa", note:"Fed SCF 2022" },
+    { label:"You",               value:curNW,    color:"#34d399", note:"Apr 2026" },
+  ];
+
+  const spendBenchmarks = [
+    { label:"Global avg household", value:16000,    color:"#334155", note:"World Bank est." },
+    { label:"US avg household",     value:78535,    color:"#475569", note:"BLS 2024" },
+    { label:"HNW avg ($1M–$30M)",   value:303000,   color:"#94a3b8", note:"Capgemini 2023" },
+    { label:"UHNW avg ($30M+)",     value:1200000,  color:"#f59e0b", note:"Knight Frank 2024" },
+    { label:"You",                  value:annualSpend, color:"#34d399", note:"trailing 12mo" },
+  ];
+
+  const catCompare = [
+    { cat:"Travel",       you:Math.round(D.cats["Travel & Hotels"]/24), hnw:4500 },
+    { cat:"Dining",       you:Math.round(D.cats["Dining"]/24),          hnw:1800 },
+    { cat:"Shopping",     you:Math.round(D.cats["Shopping"]/24),        hnw:2200 },
+    { cat:"Health",       you:Math.round(D.cats["Health"]/24),          hnw:900  },
+    { cat:"Home & HOA",   you:Math.round(D.cats["Home & HOA"]/24),      hnw:3500 },
+    { cat:"Entertainment",you:Math.round(D.cats["Entertainment"]/24),   hnw:1200 },
+  ];
+
+  function globalPct(nw) {
+    if (nw >= 1000000) return 99;
+    if (nw >= 100000)  return 90;
+    if (nw >= 8654)    return 50;
+    return 25;
+  }
+  function usPct(nw) {
+    if (nw >= 13666778) return 99;
+    if (nw >= 3779600)  return 95;
+    if (nw >= 1182580)  return 90;
+    if (nw >= 436892)   return 75;
+    if (nw >= 134382)   return 50;
+    return 25;
+  }
+
+  function HBar({ label, value, maxVal, color, note, isYou }) {
+    const pct = Math.min(value / maxVal * 100, 100);
+    return (
+      <div style={{ marginBottom:12 }}>
+        <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4, alignItems:"baseline" }}>
+          <span style={{ fontSize:12, color:isYou?"#34d399":T.txt, fontWeight:isYou?700:400 }}>{label}</span>
+          <div style={{ textAlign:"right" }}>
+            <span style={{ fontSize:12, fontFamily:"monospace",
+              color:isYou?"#34d399":T.muted, fontWeight:isYou?700:400 }}>{fmt(value,true)}</span>
+            {note && <span style={{ fontSize:9, color:T.dim, marginLeft:6, fontFamily:"monospace" }}>{note}</span>}
+          </div>
+        </div>
+        <div style={{ height:6, background:T.deep, borderRadius:3 }}>
+          <div style={{ height:6, width:pct+"%", background:color, borderRadius:3 }}/>
+        </div>
+      </div>
+    );
+  }
+
+  const maxGlobal  = Math.max(curNW, uhnwLow) * 1.05;
+  const maxUS      = Math.max(curNW, 13666778) * 1.05;
+  const maxSpend   = Math.max(annualSpend, 1200000) * 1.1;
+  const maxCat     = Math.max.apply(null, catCompare.map(function(c){ return Math.max(c.you,c.hnw); })) * 1.15;
+
+  return (
+    <WideGrid wide={wide}>
+
+      {/* Dual percentile hero */}
+      <Card style={{ background:"linear-gradient(135deg,#0f172a 0%,#0a1628 100%)",
+        border:"1px solid #1e3a5f", padding:"18px 16px", marginBottom:12 }}>
+        <Lbl>Your Wealth Rank</Lbl>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:14 }}>
+          <div style={{ textAlign:"center", background:T.deep, borderRadius:12, padding:"16px 10px" }}>
+            <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:6 }}>GLOBALLY</div>
+            <div style={{ fontSize:36, fontWeight:700, color:"#34d399", lineHeight:1, letterSpacing:-1 }}>
+              Top {100-globalPct(curNW)}%
+            </div>
+            <div style={{ fontSize:10, color:T.dim, marginTop:6 }}>of ~5.4B adults worldwide</div>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:3 }}>UBS Global Wealth Report 2023</div>
+          </div>
+          <div style={{ textAlign:"center", background:T.deep, borderRadius:12, padding:"16px 10px" }}>
+            <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:6 }}>US (AGE 40-44)</div>
+            <div style={{ fontSize:36, fontWeight:700, color:"#60a5fa", lineHeight:1, letterSpacing:-1 }}>
+              Top {100-usPct(curNW)}%
+            </div>
+            <div style={{ fontSize:10, color:T.dim, marginTop:6 }}>of US households</div>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:3 }}>Federal Reserve SCF 2022</div>
+          </div>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8 }}>
+          {[
+            { label:"Your NW",        value:fmt(curNW,true), color:"#34d399" },
+            { label:"Global Top 1%",  value:"$1M+",          color:T.muted },
+            { label:"UHNW threshold", value:"$30M+",         color:"#f59e0b" },
+          ].map(function(s) {
+            return (
+              <div key={s.label} style={{ background:T.deep, borderRadius:8, padding:"10px 8px" }}>
+                <div style={S.label}>{s.label}</div>
+                <div style={{ fontSize:13, fontWeight:700, color:s.color, fontFamily:"monospace" }}>{s.value}</div>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+
+      {/* Global NW tiers */}
+      <Card>
+        <Lbl>Net Worth vs Global Wealth Tiers</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:12 }}>
+          UBS/Credit Suisse Global Wealth Report 2023 · ~5.4B adults globally
+        </div>
+        {globalNW.map(function(b) {
+          return <HBar key={b.label} label={b.label} value={b.value}
+            maxVal={maxGlobal} color={b.color} note={b.note} isYou={b.label==="You"}/>;
+        })}
+        <div style={{ marginTop:10, background:T.deep, borderRadius:8, padding:"10px 12px" }}>
+          <div style={{ fontSize:11, color:T.muted, lineHeight:1.6 }}>
+            Globally ~<span style={{ color:"#60a5fa", fontWeight:600 }}>22.8M HNW individuals</span> hold $1M–$30M.
+            Only ~<span style={{ color:"#f59e0b", fontWeight:600 }}>218,000 people worldwide</span> have crossed $30M UHNW —
+            0.004% of all adults.
+          </div>
+        </div>
+      </Card>
+
+      {/* US NW tiers */}
+      <Card>
+        <Lbl>Net Worth vs US Benchmarks (Age 40-44)</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:12 }}>
+          Federal Reserve Survey of Consumer Finances 2022
+        </div>
+        {usNW.map(function(b) {
+          return <HBar key={b.label} label={b.label} value={b.value}
+            maxVal={maxUS} color={b.color} note={b.note} isYou={b.label==="You"}/>;
+        })}
+      </Card>
+
+      {/* Spending vs global wealth tiers */}
+      <Card>
+        <Lbl>Annual Spending vs Wealth Tier Benchmarks</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:12 }}>
+          Capgemini World Wealth Report 2023 · Knight Frank Wealth Report 2024
+        </div>
+        {spendBenchmarks.map(function(b) {
+          return <HBar key={b.label} label={b.label} value={b.value}
+            maxVal={maxSpend} color={b.color} note={b.note} isYou={b.label==="You"}/>;
+        })}
+        <div style={{ marginTop:10, fontSize:10, color:T.dim, fontFamily:"monospace", lineHeight:1.5 }}>
+          UHNW ($30M+) individuals average ~$100K/mo globally.
+          Your {fmt(avgSpend,true)}/mo aligns with UHNW spending norms.
+        </div>
+      </Card>
+
+      {/* Category vs HNW average */}
+      <Card>
+        <Lbl>Monthly Spend: You vs HNW Average</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          HNW ($1M–$30M) monthly averages · Capgemini / Knight Frank 2023-24
+        </div>
+        {catCompare.map(function(c) {
+          const youPct = c.you / maxCat * 100;
+          const hnwPct = c.hnw / maxCat * 100;
+          const mult   = (c.you / c.hnw).toFixed(1);
+          const above  = c.you > c.hnw;
+          return (
+            <div key={c.cat} style={{ marginBottom:14 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5, alignItems:"baseline" }}>
+                <span style={{ fontSize:12, color:T.txt }}>{c.cat}</span>
+                <span style={{ fontSize:10, fontFamily:"monospace",
+                  color:above?"#f59e0b":"#34d399",
+                  background:above?"#f59e0b18":"#34d39918",
+                  padding:"2px 7px", borderRadius:10 }}>{mult}x HNW avg</span>
+              </div>
+              <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
+                {[
+                  {lbl:"YOU", pct:youPct, val:c.you,  color:"#34d399"},
+                  {lbl:"HNW", pct:hnwPct, val:c.hnw,  color:"#f59e0b"},
+                ].map(function(row) {
+                  return (
+                    <div key={row.lbl} style={{ display:"flex", alignItems:"center", gap:8 }}>
+                      <span style={{ fontSize:9, color:row.color, fontFamily:"monospace", width:28, textAlign:"right" }}>{row.lbl}</span>
+                      <div style={{ flex:1, height:7, background:T.deep, borderRadius:3 }}>
+                        <div style={{ height:7, width:row.pct+"%", background:row.color, borderRadius:3, opacity:row.lbl==="HNW"?0.7:1 }}/>
+                      </div>
+                      <span style={{ fontSize:10, fontFamily:"monospace", color:row.color, width:44, textAlign:"right" }}>{fmt(row.val,true)}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+      </Card>
+
+      {/* UHNW Target Card */}
+      <Card style={{ border:"1px solid #78350f", background:"linear-gradient(135deg,#1c1200 0%,#0f172a 100%)" }}>
+        <Lbl>UHNW Target: $30M – $50M</Lbl>
+        <div style={{ fontSize:10, color:"#92400e", fontFamily:"monospace", marginBottom:16 }}>
+          Ultra-High-Net-Worth (Knight Frank) · ~218,000 people globally · 0.004% of adults
+        </div>
+        {[
+          {label:"$30M floor", target:uhnwLow,  pct:curNW/uhnwLow*100,  gap:toUhnwLow,  color:"#f59e0b"},
+          {label:"$40M mid",   target:uhnwMid,  pct:curNW/uhnwMid*100,  gap:toUhnwMid,  color:"#fb923c"},
+          {label:"$50M target",target:uhnwHigh, pct:curNW/uhnwHigh*100, gap:toUhnwHigh, color:"#f87171"},
+        ].map(function(t) {
+          return (
+            <div key={t.label} style={{ marginBottom:16 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
+                <span style={{ fontSize:12, color:T.txt, fontWeight:600 }}>{t.label}</span>
+                <span style={{ fontSize:11, color:t.color, fontFamily:"monospace" }}>{t.pct.toFixed(1)}% there</span>
+              </div>
+              <div style={{ height:10, background:T.deep, borderRadius:5 }}>
+                <div style={{ height:10, width:Math.min(t.pct,100)+"%", background:t.color, borderRadius:5 }}/>
+              </div>
+              <div style={{ display:"flex", justifyContent:"space-between", marginTop:5 }}>
+                <span style={{ fontSize:10, color:T.dim, fontFamily:"monospace" }}>You: {fmt(curNW,true)}</span>
+                <span style={{ fontSize:10, color:"#78350f", fontFamily:"monospace" }}>Need {fmt(t.gap,true)} more</span>
+              </div>
+            </div>
+          );
+        })}
+
+        <div style={{ borderTop:"1px solid #78350f44", paddingTop:14, marginTop:2 }}>
+          <div style={{ fontSize:10, fontWeight:600, letterSpacing:2, textTransform:"uppercase",
+            color:"#92400e", fontFamily:"monospace", marginBottom:6 }}>What it takes to get there</div>
+          <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:12 }}>
+            Factoring $100K/mo spend ($1.2M/yr) drawn from portfolio
+          </div>
+          {(function() {
+            function yrsWithSpend(nw, target, rate, spend) {
+              if (nw >= target) return 0;
+              var bal = nw;
+              for (var y = 1; y <= 80; y++) {
+                bal = bal * (1 + rate) - spend;
+                if (bal <= 0) return null;
+                if (bal >= target) return y;
+              }
+              return null;
+            }
+            function lbl(y, noSpend) {
+              if (y === 0) return "Already";
+              if (y === null) return "Depletes";
+              return "~" + y + " yrs";
+            }
+            function col(y) {
+              if (y === null) return "#f87171";
+              if (y === 0)    return T.green;
+              if (y <= 10)   return "#34d399";
+              if (y <= 20)   return "#60a5fa";
+              return "#f59e0b";
+            }
+            const spend = ANNUAL_SPEND;
+            const rows = [
+              {label:"7.4% UBS projected + spend", rate:0.074, noSpend:false},
+              {label:"7.7% UBS target + spend",    rate:0.077, noSpend:false},
+              {label:"10% return + spend",          rate:0.10,  noSpend:false},
+              {label:"7.4% pure growth (no spend)", rate:0.074, noSpend:true },
+            ];
+            const tgts = [uhnwLow, uhnwMid, uhnwHigh];
+            return (
+              <div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr repeat(3,auto)",
+                  gap:6, marginBottom:8, paddingBottom:6, borderBottom:"1px solid #78350f33" }}>
+                  <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>SCENARIO</span>
+                  {["$30M","$40M","$50M"].map(function(l) {
+                    return <span key={l} style={{ fontSize:9, color:T.dim, fontFamily:"monospace",
+                      textAlign:"right", minWidth:52 }}>{l}</span>;
+                  })}
+                </div>
+                {rows.map(function(r, i) {
+                  return (
+                    <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr repeat(3,auto)",
+                      gap:6, padding:"9px 0", alignItems:"center",
+                      borderBottom:i<rows.length-1?"1px solid #78350f22":"none" }}>
+                      <span style={{ fontSize:11, color:"#fbbf24", fontWeight:600 }}>{r.label}</span>
+                      {tgts.map(function(t) {
+                        var y = r.noSpend
+                          ? (curNW>=t ? 0 : Math.ceil(Math.log(t/curNW)/Math.log(1+r.rate)))
+                          : yrsWithSpend(curNW, t, r.rate, spend);
+                        return (
+                          <span key={t} style={{ fontSize:11, fontFamily:"monospace", fontWeight:600,
+                            textAlign:"right", minWidth:52, color:col(r.noSpend?(curNW>=t?0:y):y) }}>
+                            {r.noSpend?(y===0?"Already":"~"+y+" yrs"):lbl(y)}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+                <div style={{ marginTop:10, fontSize:9, color:T.dim, fontFamily:"monospace", lineHeight:1.5 }}>
+                  "Depletes" = spend exceeds net portfolio growth before reaching that target
+                </div>
+              </div>
+            );
+          })()}
+          <div style={{ marginTop:14, display:"flex", flexDirection:"column" }}>
+            {[
+              {icon:"🏦", label:"NW multiple needed",
+               sub:"$30M = "+(uhnwLow/curNW).toFixed(1)+"x · $40M = "+(uhnwMid/curNW).toFixed(1)+"x · $50M = "+(uhnwHigh/curNW).toFixed(1)+"x current NW"},
+              {icon:"🌍", label:"Global UHNW context",
+               sub:"~218,000 UHNW individuals across 68 countries. US has ~100,000. Joining puts you in the top 0.004% of global adults and top 0.08% of US households."},
+            ].map(function(r, i) {
+              return (
+                <div key={i} style={{ display:"flex", gap:12, padding:"10px 0",
+                  borderBottom:i<1?"1px solid #78350f33":"none" }}>
+                  <span style={{ fontSize:18, flexShrink:0, lineHeight:1.5 }}>{r.icon}</span>
+                  <div>
+                    <div style={{ fontSize:12, fontWeight:600, color:"#fbbf24", marginBottom:2 }}>{r.label}</div>
+                    <div style={{ fontSize:11, color:T.muted, lineHeight:1.5 }}>{r.sub}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </Card>
+
+      {/* Global context facts */}
+      <Card>
+        <Lbl>Global Context</Lbl>
+        {[
+          {icon:"🌍", text:"Your NW puts you in the global top 1% — fewer than 1% of the world's 5.4 billion adults hold $1M or more."},
+          {icon:"✈️", text:"Your travel spend alone ("+fmt(Math.round(D.cats["Travel & Hotels"]/12),true)+"/mo) exceeds the total annual income of the average person in over 100 countries."},
+          {icon:"📊", text:"There are ~22.8M HNW individuals ($1M–$30M) globally. You sit in the upper portion of this group, well above the $5M mark."},
+          {icon:"💼", text:"Your monthly spend of "+fmt(avgSpend,true)+" aligns with UHNW ($30M+) norms globally (~$100K/mo), above the HNW average of ~$25K/mo."},
+          {icon:"🏦", text:"The US holds ~100,000 of the world's 218,000 UHNW individuals. At $30M you'd join 0.004% of global adults and 0.08% of US households."},
+        ].map(function(f, i) {
+          return (
+            <div key={i} style={{ display:"flex", gap:12, padding:"12px 0",
+              borderBottom:i<4?"1px solid "+T.border:"none" }}>
+              <span style={{ fontSize:20, flexShrink:0, lineHeight:1.4 }}>{f.icon}</span>
+              <span style={{ fontSize:12, color:T.muted, lineHeight:1.5 }}>{f.text}</span>
+            </div>
+          );
+        })}
+        <div style={{ marginTop:12, fontSize:9, color:T.dim, fontFamily:"monospace", lineHeight:1.6 }}>
+          Sources: UBS/Credit Suisse Global Wealth Report 2023 · Knight Frank Wealth Report 2024 · Capgemini World Wealth Report 2023 · Federal Reserve SCF 2022
+        </div>
+      </Card>
+    </WideGrid>
+  );
+}
+function StatPill({ label, value, sub, status }) {
+  const colors = { good:"#34d399", warn:"#f59e0b", info:"#60a5fa", neutral:T.muted };
+  const bgs    = { good:"#34d39915", warn:"#f59e0b15", info:"#60a5fa15", neutral:"#94a3b815" };
+  const c = colors[status] || colors.neutral;
+  const b = bgs[status]   || bgs.neutral;
+  return (
+    <div style={{ background:T.surf, border:"1px solid " + T.border, borderRadius:12,
+      padding:"14px 14px", display:"flex", flexDirection:"column", gap:4 }}>
+      <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", letterSpacing:1.5,
+        textTransform:"uppercase" }}>{label}</div>
+      <div style={{ fontSize:20, fontWeight:700, color:c }}>{value}</div>
+      <div style={{ fontSize:10, color:T.muted, background:b, padding:"2px 8px",
+        borderRadius:8, alignSelf:"flex-start" }}>{sub}</div>
+    </div>
+  );
+}
+function Insights({ derived, wide }) {
+  const { curNW, curSpend, avgSpend, totalAssets, totalLiab } = derived;
+  const annualSpend = avgSpend * 12;
+  const realEstate  = D.groups.find(function(g){ return g.name==="Real Estate"; }).value;
+  const investable  = curNW - realEstate;
+  const ubsVal      = D.groups.find(function(g){ return g.name==="UBS Investments"; }).value;
+  const ubsPct      = (ubsVal/totalAssets*100).toFixed(1);
+  const debtToAsset    = (totalLiab/totalAssets*100).toFixed(1);
+  const leverageRatio  = (totalAssets/curNW).toFixed(2);
+  const solvencyRatio  = (curNW/totalAssets*100).toFixed(1);
+  const spendToNW      = (annualSpend/curNW*100).toFixed(2);
+  const liquidCoverage = Math.floor(investable/curSpend);
+
+  function yrsToTarget(target, rate) {
+    if (curNW >= target) return 0;
+    return Math.ceil(Math.log(target/curNW)/Math.log(1+rate));
+  }
+
+  return (
+    <WideGrid wide={wide}>
+
+      {/* FI STATUS HERO */}
+      <Card style={{ background:"linear-gradient(135deg,#0a1628 0%,#0f172a 100%)",
+        border:"1px solid #1e3a5f", padding:"18px 16px", marginBottom:12 }}>
+        <Lbl>Financial Independence — Current State</Lbl>
+
+        {(function() {
+          const annualSpd = ANNUAL_SPEND;
+          const portReturn    = P.portReturn / 100;
+          const portGross     = curNW * (P.portReturn/100);
+          const portNet       = portGross * (1 - FED_TAX);
+          const redbrickInc   = P.redbrick;
+          const ssIncome      = P.ssMax + P.ssHailey;
+
+          const spendVsNet    = (annualSpd / portNet * 100).toFixed(0);
+          const selfFundNet   = portNet >= annualSpd;
+          const withSS        = (portNet + ssIncome) >= annualSpd;
+
+          const nwPostRedbrick   = curNW + redbrickInc;
+          const portNetPost      = nwPostRedbrick * portReturn * (1 - FED_TAX);
+          const selfFundingPost  = portNetPost >= annualSpd;
+
+          function yearsToDepletion(nw, spend, rate) {
+            if (rate >= spend / nw) return 999;
+            var bal = nw;
+            for (var y = 0; y < 200; y++) {
+              bal = bal * (1 + rate) - spend;
+              if (bal <= 0) return y + 1;
+            }
+            return 999;
+          }
+
+          return (
+            <div>
+              {/* Gross vs net ratio */}
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:14 }}>
+                <div style={{ textAlign:"center", background:T.deep, borderRadius:12, padding:"14px 10px" }}>
+                  <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>GROSS (pre-tax)</div>
+                  <div style={{ fontSize:34, fontWeight:700, letterSpacing:-1, lineHeight:1,
+                    color:portGross>=annualSpd?T.green:"#f59e0b" }}>
+                    {(annualSpd/portGross*100).toFixed(0)}%
+                  </div>
+                  <div style={{ fontSize:10, color:T.dim, marginTop:4 }}>{fmt(portGross,true)}/yr</div>
+                </div>
+                <div style={{ textAlign:"center", background:T.deep, borderRadius:12, padding:"14px 10px" }}>
+                  <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>AFTER-TAX (~23.8%)</div>
+                  <div style={{ fontSize:34, fontWeight:700, letterSpacing:-1, lineHeight:1,
+                    color:selfFundNet?T.green:"#f87171" }}>
+                    {spendVsNet}%
+                  </div>
+                  <div style={{ fontSize:10, color:T.dim, marginTop:4 }}>{fmt(portNet,true)}/yr net</div>
+                </div>
+              </div>
+              <div style={{ fontSize:11, color:T.muted, textAlign:"center", marginBottom:16 }}>
+                {selfFundNet
+                  ? "✓ After-tax earnings cover $120K/mo"
+                  : withSS
+                  ? "Covered with Social Security at 67"
+                  : "Spend exceeds after-tax income today"}
+              </div>
+
+              {/* Income stack — after-tax */}
+              {[
+                { label:"Portfolio net after-tax (7.42% × 76.2%)", value:portNet,   color:"#60a5fa" },
+                { label:"+ Social Security at 67",                   value:ssIncome, color:"#a78bfa" },
+                { label:"Your spend ($120K/mo)",                     value:annualSpd, color:"#f59e0b", isSpend:true },
+              ].map(function(r) {
+                var maxVal = portNet + ssIncome;
+                var w = Math.min((r.isSpend ? annualSpd : r.value) / maxVal * 100, 100);
+                return (
+                  <div key={r.label} style={{ marginBottom:10 }}>
+                    <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                      <span style={{ fontSize:11, color:r.isSpend?T.txt:T.muted }}>{r.label}</span>
+                      <span style={{ fontSize:12, fontFamily:"monospace", fontWeight:600, color:r.color }}>
+                        {fmt(r.value,true)}/yr
+                      </span>
+                    </div>
+                    <div style={{ height:6, background:T.deep, borderRadius:3 }}>
+                      <div style={{ height:6, width:w+"%", background:r.color,
+                        borderRadius:3, opacity:r.isSpend?1:0.8 }}/>
+                    </div>
+                  </div>
+                );
+              })}
+
+              {/* Redbrick */}
+              <div style={{ background:"#fbbf2410", border:"1px solid #fbbf2430",
+                borderRadius:8, padding:"10px 12px", margin:"14px 0" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
+                  <span style={{ fontSize:11, fontWeight:600, color:"#fbbf24" }}>🏢 After Redbrick (2032)</span>
+                  <span style={{ fontSize:12, fontFamily:"monospace", color:"#fbbf24", fontWeight:700 }}>
+                    +{fmt(redbrickInc,true)}
+                  </span>
+                </div>
+                <div style={{ fontSize:10, color:T.dim, lineHeight:1.5 }}>
+                  Net investable → {fmt(nwPostRedbrick,true)} · After-tax earnings → {fmt(portNetPost,true)}/yr ·{" "}
+                  <span style={{ color:selfFundingPost?T.green:"#f59e0b", fontWeight:600 }}>
+                    {selfFundingPost?"✓ Self-funding after-tax":"still short "+fmt(annualSpd-portNetPost,true)+"/yr"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Runway — after-tax rates */}
+              <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace",
+                marginBottom:8, letterSpacing:1, textTransform:"uppercase" }}>
+                Runway at $120K/mo (after-tax return rates)
+              </div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:7 }}>
+                {[
+                  {label:"0% growth",              rate:0                     },
+                  {label:"3% gross → 2.3% net",    rate:0.03*(1-FED_TAX)     },
+                  {label:"7.4% gross → 5.6% net",  rate:0.074*(1-FED_TAX)    },
+                  {label:"7.7% gross → 5.9% net",  rate:0.077*(1-FED_TAX)    },
+                ].map(function(s) {
+                  var yrs = yearsToDepletion(curNW, annualSpd, s.rate);
+                  var sustain = yrs >= 999;
+                  var col = sustain?"#34d399":yrs>30?"#60a5fa":yrs>20?"#f59e0b":"#f87171";
+                  return (
+                    <div key={s.label} style={{ background:T.deep,
+                      border:"1px solid "+(sustain?"#34d39930":T.border),
+                      borderRadius:8, padding:"10px 12px" }}>
+                      <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>{s.label}</div>
+                      <div style={{ fontSize:18, fontWeight:700, color:col }}>
+                        {sustain?"∞":yrs+" yrs"}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:8 }}>
+                Florida: no state tax · Federal LTCG 20% + NIIT 3.8% = ~23.8% on investment income
+              </div>
+            </div>
+          );
+        })()}
+      </Card>
+
+      {/* PORTFOLIO RETURN & ALLOCATION */}
+      <Card>
+        <Lbl>Portfolio — Current vs UBS Target (Longevity)</Lbl>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, marginBottom:14 }}>
+          {[
+            {label:"Current Return", value:P.portReturn+"%",  status:"info", sub:"Projected annual"},
+            {label:"Target Return",  value:P.targetReturn+"%",status:"good", sub:"Longevity portfolio"},
+            {label:"Std Deviation",  value:P.stdDev+"%",      status:"neutral",sub:"Current portfolio risk"},
+            {label:"Bear Market",    value:P.bearMarket+"%",  status:"warn", sub:"Great Recession stress"},
+          ].map(function(s) {
+            return <StatPill key={s.label} label={s.label} value={s.value} sub={s.sub} status={s.status} />;
+          })}
+        </div>
+        {[
+          {label:"Cash",        cur:P.allocCurrent.cash,        tgt:P.allocTarget.cash,        color:"#94a3b8"},
+          {label:"Fixed Income",cur:P.allocCurrent.fixedIncome, tgt:P.allocTarget.fixedIncome,  color:"#60a5fa"},
+          {label:"Equity",      cur:P.allocCurrent.equity,      tgt:P.allocTarget.equity,       color:"#34d399"},
+          {label:"Non-Trad",    cur:P.allocCurrent.nonTrad,     tgt:P.allocTarget.nonTrad,      color:"#a78bfa"},
+        ].map(function(a) {
+          return (
+            <div key={a.label} style={{ marginBottom:10 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
+                <span style={{ fontSize:11, color:T.txt }}>{a.label}</span>
+                <span style={{ fontSize:10, fontFamily:"monospace", color:T.muted }}>
+                  {a.cur}% → <span style={{ color:a.color }}>{a.tgt}%</span>
+                </span>
+              </div>
+              <div style={{ display:"flex", flexDirection:"column", gap:3 }}>
+                <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                  <span style={{ fontSize:8, color:T.dim, width:20, fontFamily:"monospace" }}>NOW</span>
+                  <div style={{ flex:1, height:5, background:T.deep, borderRadius:2 }}>
+                    <div style={{ height:5, width:Math.min(a.cur*2,100)+"%", background:"#475569", borderRadius:2 }}/>
+                  </div>
+                </div>
+                <div style={{ display:"flex", alignItems:"center", gap:6 }}>
+                  <span style={{ fontSize:8, color:a.color, width:20, fontFamily:"monospace" }}>TGT</span>
+                  <div style={{ flex:1, height:5, background:T.deep, borderRadius:2 }}>
+                    <div style={{ height:5, width:Math.min(a.tgt*2,100)+"%", background:a.color, borderRadius:2 }}/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+        <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:6 }}>
+          UBS recommends: ↑ Equity 42→52% · ↑ Fixed Income structure · ↓ Non-Trad 30→20% · ↓ Cash
+        </div>
+      </Card>
+
+      {/* BALANCE SHEET */}
+      <Card>
+        <Lbl>Balance Sheet Health</Lbl>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+          <StatPill label="Debt / Assets"  value={debtToAsset+"%"}
+            sub={parseFloat(debtToAsset)<30?"✓ Conservative":"Moderate"} status={parseFloat(debtToAsset)<30?"good":"warn"} />
+          <StatPill label="NW / Assets"    value={solvencyRatio+"%"}
+            sub={parseFloat(solvencyRatio)>70?"✓ Strong equity":"Moderate"} status={parseFloat(solvencyRatio)>70?"good":"warn"} />
+          <StatPill label="Leverage"       value={leverageRatio+"x"}
+            sub={parseFloat(leverageRatio)<1.5?"✓ Low":"Moderate"} status={parseFloat(leverageRatio)<1.5?"good":"warn"} />
+          <StatPill label="Spend / NW"     value={spendToNW+"%"}
+            sub={parseFloat(spendToNW)<2?"✓ Sustainable":"Review"} status={parseFloat(spendToNW)<2?"good":"info"} />
+          <StatPill label="Liquid Runway"  value={liquidCoverage+" mo"} sub="Months in investable assets" status="info" />
+          <StatPill label="UBS Conc."      value={ubsPct+"%"}
+            sub={parseFloat(ubsPct)>60?"⚠ Single-manager":"Diversified"} status={parseFloat(ubsPct)>60?"warn":"good"} />
+        </div>
+      </Card>
+
+      {/* GROWTH TABLE */}
+      <Card>
+        <Lbl>Years to NW Target — Passive Compounding</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:10 }}>
+          From {fmt(curNW,true)} · UBS projects 7.42% current / 7.70% target
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr repeat(4,auto)", gap:5,
+          marginBottom:8, paddingBottom:8, borderBottom:"1px solid "+T.border }}>
+          <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>TARGET</span>
+          {["5%","7.4%","10%","12%"].map(function(r) {
+            return <span key={r} style={{ fontSize:9, color:T.dim, fontFamily:"monospace", textAlign:"center", minWidth:30 }}>{r}</span>;
+          })}
+        </div>
+        {[25000000,30000000,40000000,50000000].map(function(target) {
+          if (curNW >= target) return null;
+          return (
+            <div key={target} style={{ display:"grid", gridTemplateColumns:"1fr repeat(4,auto)", gap:5,
+              padding:"7px 0", borderBottom:"1px solid "+T.border+"55", alignItems:"center" }}>
+              <span style={{ fontSize:12, color:T.txt, fontWeight:600 }}>{fmt(target,true)}</span>
+              {[0.05,0.074,0.10,0.12].map(function(r) {
+                const yrs = yrsToTarget(target,r);
+                return (
+                  <span key={r} style={{ fontSize:11, fontFamily:"monospace", textAlign:"center",
+                    color:yrs<=5?"#34d399":yrs<=10?"#60a5fa":yrs<=20?"#fbbf24":T.muted, minWidth:30 }}>
+                    {yrs}y
+                  </span>
+                );
+              })}
+            </div>
+          );
+        })}
+        <div style={{ marginTop:10, fontSize:9, color:T.dim, fontFamily:"monospace" }}>
+          Green ≤5y · Blue ≤10y · Yellow ≤20y · 7.4% = UBS current portfolio projection
+        </div>
+      </Card>
+
+      {/* RETIREMENT INCOME */}
+      <Card>
+        <Lbl>Income Picture at Age {P.ssAge} (Year 2054)</Lbl>
+        {(function() {
+          const portGross2 = curNW * (P.portReturn/100);
+          const portNet2   = portGross2 * (1 - FED_TAX);
+          return [
+            {label:"Portfolio net after-tax (7.42% × 76.2%)", value:portNet2,          color:"#60a5fa", note:"Today's NW"},
+            {label:"Redbrick lump sum (2032)",                  value:P.redbrick,        color:"#fbbf24", note:"One-time"},
+            {label:"Social Security at 67",                     value:P.ssMax+P.ssHailey,color:"#a78bfa", note:"Max + Hailey"},
+            {label:"UBS stated retirement goal",                value:P.retireGoal,      color:T.muted,   note:"Basic living"},
+            {label:"Your spend ($120K/mo)",                     value:ANNUAL_SPEND,      color:"#f59e0b", note:"Current rate"},
+          ].map(function(r) {
+            const maxV = portNet2 + P.ssMax + P.ssHailey;
+            const pct  = Math.min(r.value/maxV*100, 100);
+            return (
+              <div key={r.label} style={{ marginBottom:11 }}>
+                <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
+                  <span style={{ fontSize:11, color:T.txt }}>{r.label}</span>
+                  <div style={{ textAlign:"right" }}>
+                    <span style={{ fontSize:12, fontFamily:"monospace", color:r.color, fontWeight:600 }}>
+                      {fmt(r.value,true)}/yr
+                    </span>
+                    <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginLeft:6 }}>{r.note}</span>
+                  </div>
+                </div>
+                <div style={{ height:5, background:T.deep, borderRadius:2 }}>
+                  <div style={{ height:5, width:Math.min(pct,100)+"%", background:r.color, borderRadius:2 }}/>
+                </div>
+              </div>
+            );
+          });
+        })()}
+      </Card>
+
+      {/* CONCENTRATION */}
+      <Card>
+        <Lbl>Asset Concentration Risk</Lbl>
+        {[
+          {label:"UBS Investments", pct:parseFloat(ubsPct), color:"#60a5fa", warn:parseFloat(ubsPct)>60, note:"Single manager risk"},
+          {label:"Real Estate",     pct:parseFloat((realEstate/totalAssets*100).toFixed(1)), color:"#34d399", warn:false, note:"Illiquid"},
+          {label:"Personal Invest.",pct:parseFloat((D.groups[2].value/totalAssets*100).toFixed(1)), color:"#a78bfa", warn:false, note:""},
+          {label:"Cash+Retirement", pct:parseFloat(((D.groups[3].value+D.groups[4].value)/totalAssets*100).toFixed(1)), color:"#fbbf24", warn:false, note:"Most liquid"},
+        ].map(function(item) {
+          return (
+            <div key={item.label} style={{ marginBottom:12 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:4 }}>
+                <span style={{ fontSize:12, color:T.txt }}>{item.label}</span>
+                <span style={{ fontSize:12, fontFamily:"monospace",
+                  color:item.warn?"#f59e0b":item.color, fontWeight:600 }}>
+                  {item.pct.toFixed(1)}%{item.warn?" ⚠":""}
+                </span>
+              </div>
+              <div style={{ height:6, background:T.deep, borderRadius:3 }}>
+                <div style={{ height:6, width:Math.min(item.pct,100)+"%",
+                  background:item.warn?"#f59e0b":item.color, borderRadius:3 }}/>
+              </div>
+              {item.note && <div style={{ fontSize:9, color:T.dim, marginTop:3 }}>{item.note}</div>}
+            </div>
+          );
+        })}
+      </Card>
+
+      {/* E*TRADE HOLDINGS — data lives in ETRADE const at top of file */}
+      <Card>
+        <Lbl>E*Trade Holdings — {ETRADE.asOf}</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          Acct ...1606 · Self-directed · Total: {fmt(ETRADE.total,true)} · Cost basis: {fmt(ETRADE.costBasis,true)} · Unrealized gain: {fmt(ETRADE.unrealized,true)}
+        </div>
+
+        {/* TSLA concentration warning — derived from ETRADE.holdings */}
+        {(function(){
+          var tsla = ETRADE.holdings.find(function(h){ return h.ticker==="TSLA"; });
+          if (!tsla) return null;
+          var tslaPct = (tsla.value / ETRADE.total * 100).toFixed(0);
+          return (
+            <div style={{ background:"#f59e0b10", border:"1px solid #f59e0b30",
+              borderRadius:8, padding:"10px 12px", marginBottom:14 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+                <div>
+                  <div style={{ fontSize:11, fontWeight:700, color:"#f59e0b" }}>⚠ Tesla concentration</div>
+                  <div style={{ fontSize:10, color:T.dim, marginTop:2 }}>
+                    {tsla.qty.toLocaleString()} shares · {tslaPct}% of account · {fmt(tsla.gain,true)} unrealized gain
+                  </div>
+                </div>
+                <div style={{ textAlign:"right" }}>
+                  <div style={{ fontSize:16, fontWeight:700, fontFamily:"monospace", color:"#f59e0b" }}>
+                    {fmt(tsla.value,true)}
+                  </div>
+                  <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>@ ${tsla.price.toFixed(2)}</div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* Holdings list — driven by ETRADE.holdings */}
+        {ETRADE.holdings.filter(function(h){ return h.value !== null; }).map(function(h) {
+          var pct = (h.value / ETRADE.total * 100).toFixed(1);
+          var gainPos = h.gain >= 0;
+          return (
+            <div key={h.ticker} style={{ display:"flex", alignItems:"center", gap:10,
+              padding:"10px 0", borderBottom:"1px solid "+T.border }}>
+              <div style={{ width:42, height:42, borderRadius:10, background:T.deep,
+                border:"1px solid "+T.border, display:"flex", alignItems:"center",
+                justifyContent:"center", flexShrink:0 }}>
+                <span style={{ fontSize:9, fontWeight:700, color:T.blue, fontFamily:"monospace" }}>
+                  {h.ticker}
+                </span>
+              </div>
+              <div style={{ flex:1, minWidth:0 }}>
+                <div style={{ fontSize:12, fontWeight:600, color:T.txt }}>{h.name}</div>
+                <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:1 }}>
+                  {h.qty && h.price ? h.qty.toLocaleString()+" shares · $"+h.price.toFixed(2) : "qty unavailable"}
+                  {" · "}{pct}% of acct
+                </div>
+              </div>
+              <div style={{ textAlign:"right", flexShrink:0 }}>
+                <div style={{ fontSize:12, fontWeight:700, fontFamily:"monospace", color:T.txt }}>
+                  {fmt(h.value,true)}
+                </div>
+                <div style={{ fontSize:10, fontFamily:"monospace", color:gainPos?"#34d399":"#f87171" }}>
+                  {gainPos?"+":""}{fmt(h.gain,true)}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+
+        <div style={{ ...S.inset, marginTop:12 }}>
+          <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>TAX NOTE</div>
+          <div style={{ fontSize:11, color:T.muted, lineHeight:1.6 }}>
+            {fmt(ETRADE.unrealized,true)} unrealized gain on {fmt(ETRADE.costBasis,true)} cost basis.
+            Full liquidation: ~{fmt(Math.round(ETRADE.unrealized * FED_TAX),true)} federal tax at 23.8% LTCG+NIIT (FL: no state tax).
+            TSLA alone is {fmt((function(){var h=ETRADE.holdings.find(function(h){return h.ticker==="TSLA";});return h?h.gain:0;})(),true)} in embedded gain.
+          </div>
+        </div>
+      </Card>
+
+    </WideGrid>
+  );
+}
+function SpotOn({ derived, wide }) {
+  const { curNW, curSpend, avgSpend } = derived;
+
+  const scenarios = [
+    { label:"Distressed",  emoji:"🐻", amount:5000000,  color:"#f87171",
+      desc:"Fire-sale M&A or recap — buyer controls terms", ubsLabel:"Not modeled by UBS" },
+    { label:"Base Case",   emoji:"🎯", amount:10000000, color:"#f59e0b",
+      desc:"~1.3x revenue exit, 2028-2030, strategic buyer", ubsLabel:"Realistic central case" },
+    { label:"Upside",      emoji:"📈", amount:15000000, color:"#34d399",
+      desc:"~2x revenue exit, market improves, willing buyer", ubsLabel:"Bull case given current conditions" },
+  ];
+
+  function scenarioMetrics(amount) {
+    const proFormaNW    = curNW + amount;
+    const portGross     = proFormaNW * (P.portReturn / 100);
+    const portNet       = portGross * (1 - FED_TAX);
+    const ssIncome      = P.ssMax + P.ssHailey;
+    const selfFundNet   = portNet >= ANNUAL_SPEND;
+    const selfFundSS    = (portNet + ssIncome) >= ANNUAL_SPEND;
+    const spendVsNet    = (ANNUAL_SPEND / portNet * 100).toFixed(0);
+
+    const netRate       = (P.portReturn / 100) * (1 - FED_TAX);
+
+    function runway(nw, rate) {
+      if (rate >= ANNUAL_SPEND / nw) return 999;
+      var b = nw;
+      for (var y = 0; y < 200; y++) { b = b*(1+rate) - ANNUAL_SPEND; if (b<=0) return y+1; }
+      return 999;
+    }
+    const runwayYrs = runway(proFormaNW, netRate);
+    const yrs30m = proFormaNW >= 30e6 ? 0 : Math.ceil(Math.log(30e6/proFormaNW)/Math.log(1.074));
+    const yrs50m = proFormaNW >= 50e6 ? 0 : Math.ceil(Math.log(50e6/proFormaNW)/Math.log(1.074));
+    return { proFormaNW, portGross, portNet, selfFundNet, selfFundSS, spendVsNet, runwayYrs, yrs30m, yrs50m, ssIncome, netRate };
+  }
+
+  const [active, setActive] = useState(1);
+
+  const sc  = scenarios[active];
+  const m   = scenarioMetrics(sc.amount);
+
+  const ubsMC = [null, null, 85];
+
+  return (
+    <WideGrid wide={wide}>
+
+      {/* HEADER */}
+      <Card style={{ background:"linear-gradient(135deg,#0c0a00 0%,#0f172a 100%)",
+        border:"1px solid #78350f", padding:"18px 16px", marginBottom:12 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:4 }}>
+          <span style={{ fontSize:28 }}>📊</span>
+          <div>
+            <div style={{ fontSize:16, fontWeight:700, color:"#fbbf24" }}>SpotOn Exit Analysis</div>
+            <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace" }}>
+              Realistic exit window 2028–2030 · Original stake from Appetize acquisition (2021)
+            </div>
+          </div>
+        </div>
+        <div style={{ fontSize:11, color:T.muted, marginTop:8, lineHeight:1.6 }}>
+          UBS originally modeled $15–30M in 2026. Market conditions have changed materially —
+          fintech POS valuations compressed, IPO window closed, Toast trades at ~2.3x revenue.
+          At SpotOn's ~$750M revenue, a realistic exit range is <span style={{ color:"#f59e0b", fontWeight:600 }}>$10–15M</span> for your stake,
+          likely via strategic M&A in 2028–2030. The $30M scenario is excluded as it requires
+          a return to 2022 market conditions. Plan around $10M base, $15M upside.
+        </div>
+      </Card>
+
+      {/* SCENARIO SELECTOR */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, marginBottom:12 }}>
+        {scenarios.map(function(s, i) {
+          const isActive = active === i;
+          return (
+            <div key={s.label} onClick={function(){ setActive(i); }}
+              style={{ background:isActive ? s.color+"20" : T.surf,
+                border:"2px solid "+(isActive ? s.color : T.border),
+                borderRadius:12, padding:"12px 10px", cursor:"pointer",
+                textAlign:"center", transition:"all 0.15s",
+                WebkitTapHighlightColor:"transparent" }}>
+              <div style={{ fontSize:22, marginBottom:4 }}>{s.emoji}</div>
+              <div style={{ fontSize:11, fontWeight:700, color:isActive ? s.color : T.txt }}>{s.label}</div>
+              <div style={{ fontSize:14, fontWeight:700, color:isActive ? s.color : T.muted,
+                fontFamily:"monospace", marginTop:2 }}>{fmt(s.amount,true)}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* ACTIVE SCENARIO DETAIL */}
+      <Card style={{ border:"2px solid "+sc.color, background:sc.color+"08", marginBottom:12 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:14 }}>
+          <span style={{ fontSize:28 }}>{sc.emoji}</span>
+          <div style={{ flex:1 }}>
+            <div style={{ fontSize:15, fontWeight:700, color:sc.color }}>{sc.label} — {fmt(sc.amount,true)}</div>
+            <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginTop:2 }}>{sc.desc}</div>
+          </div>
+          {ubsMC[active] && (
+            <div style={{ textAlign:"center", background:sc.color+"20",
+              border:"1px solid "+sc.color+"50", borderRadius:10, padding:"8px 12px" }}>
+              <div style={{ fontSize:18, fontWeight:700, color:sc.color }}>{ubsMC[active]}%</div>
+              <div style={{ fontSize:8, color:T.dim, fontFamily:"monospace" }}>UBS MC</div>
+            </div>
+          )}
+        </div>
+
+        {/* Pro forma NW */}
+        <div style={{ background:T.deep, borderRadius:10, padding:"14px", marginBottom:12 }}>
+          <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", letterSpacing:1.5,
+            textTransform:"uppercase", marginBottom:6 }}>Pro Forma Net Worth</div>
+          <div style={{ display:"flex", alignItems:"baseline", gap:12, flexWrap:"wrap" }}>
+            <div>
+              <div style={{ fontSize:11, color:T.dim, fontFamily:"monospace" }}>Today</div>
+              <div style={{ fontSize:18, fontWeight:700, color:T.muted }}>{fmt(curNW,true)}</div>
+            </div>
+            <div style={{ fontSize:18, color:T.dim }}>+</div>
+            <div>
+              <div style={{ fontSize:11, color:T.dim, fontFamily:"monospace" }}>SpotOn</div>
+              <div style={{ fontSize:18, fontWeight:700, color:sc.color }}>{fmt(sc.amount,true)}</div>
+            </div>
+            <div style={{ fontSize:18, color:T.dim }}>=</div>
+            <div>
+              <div style={{ fontSize:11, color:T.dim, fontFamily:"monospace" }}>New NW</div>
+              <div style={{ fontSize:22, fontWeight:700, color:T.txt }}>{fmt(m.proFormaNW,true)}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* FI status — portfolio earnings model */}
+        <Lbl>Financial Independence Status</Lbl>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
+          <div style={{ background:T.deep, borderRadius:10, padding:"12px", textAlign:"center" }}>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>GROSS EARNINGS</div>
+            <div style={{ fontSize:24, fontWeight:700, color:m.portGross>=ANNUAL_SPEND?T.green:"#f59e0b" }}>
+              {(ANNUAL_SPEND/m.portGross*100).toFixed(0)}%
+            </div>
+            <div style={{ fontSize:10, color:T.dim, marginTop:2 }}>{fmt(m.portGross,true)}/yr</div>
+          </div>
+          <div style={{ background:T.deep, borderRadius:10, padding:"12px", textAlign:"center",
+            border:"1px solid "+(m.selfFundNet?"#34d39940":T.border) }}>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>AFTER-TAX NET</div>
+            <div style={{ fontSize:24, fontWeight:700, color:m.selfFundNet?T.green:"#f87171" }}>
+              {m.spendVsNet}%
+            </div>
+            <div style={{ fontSize:10, color:T.dim, marginTop:2 }}>{fmt(m.portNet,true)}/yr net</div>
+          </div>
+        </div>
+
+        <div style={{ background:T.deep, border:"1px solid "+T.border, borderRadius:8,
+          padding:"10px 12px", marginBottom:14, fontSize:11, color:T.muted, lineHeight:1.6 }}>
+          {m.selfFundNet
+            ? "✓ After-tax portfolio earnings cover $120K/mo spend"
+            : m.selfFundSS
+            ? "Covered when Social Security starts at age "+P.ssAge
+            : "Spend exceeds after-tax earnings — drawdown required"}
+          {" · "}No FL state tax · Fed LTCG+NIIT ~23.8%
+        </div>
+
+        {/* Key metrics grid */}
+        <Lbl>Key Metrics at This Scenario</Lbl>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:14 }}>
+          {[
+            {label:"Pro Forma NW",     value:fmt(m.proFormaNW,true),                              color:sc.color},
+            {label:"Runway (net rate)",value:m.runwayYrs>=999?"∞ Sustainable":m.runwayYrs+"y",   color:m.runwayYrs>=999?"#34d399":m.runwayYrs>30?"#60a5fa":"#f59e0b"},
+            {label:"Yrs to $30M",      value:m.yrs30m===0?"Already ✓":m.yrs30m+"y @ 7.4%",       color:m.yrs30m===0?"#34d399":T.muted},
+            {label:"Yrs to $50M",      value:m.yrs50m===0?"Already ✓":m.yrs50m+"y @ 7.4%",       color:m.yrs50m===0?"#34d399":T.muted},
+          ].map(function(s) {
+            return (
+              <div key={s.label} style={{...S.inset, borderRadius:10, padding:"12px"}}>
+                <div style={S.label}>{s.label}</div>
+                <div style={{ fontSize:15, fontWeight:700, color:s.color }}>{s.value}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* UBS note */}
+        <div style={S.inset}>
+          <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:2 }}>UBS PLAN NOTE</div>
+          <div style={{ fontSize:11, color:T.muted }}>{sc.ubsLabel}</div>
+        </div>
+      </Card>
+
+      {/* SIDE-BY-SIDE COMPARISON */}
+      <Card>
+        <Lbl>Side-by-Side Comparison</Lbl>
+        <div style={{ overflowX:"auto" }}>
+          <table style={{ width:"100%", borderCollapse:"collapse", fontSize:11 }}>
+            <thead>
+              <tr>
+                <th style={{ textAlign:"left", padding:"6px 8px", color:T.dim, fontFamily:"monospace",
+                  fontSize:9, letterSpacing:1, textTransform:"uppercase", borderBottom:"1px solid "+T.border }}>
+                  Metric
+                </th>
+                {scenarios.map(function(s) {
+                  return (
+                    <th key={s.label} style={{ textAlign:"right", padding:"6px 8px",
+                      color:s.color, fontFamily:"monospace", fontSize:9, letterSpacing:0.5,
+                      borderBottom:"1px solid "+T.border }}>
+                      {s.emoji} {fmt(s.amount,true)}
+                    </th>
+                  );
+                })}
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                {label:"Pro Forma NW",       fn:function(a){ return fmt(curNW+a,true); }},
+                {label:"Gross earnings/yr",  fn:function(a){ return fmt((curNW+a)*(P.portReturn/100),true); }},
+                {label:"Net after-tax/yr",   fn:function(a){ return fmt((curNW+a)*(P.portReturn/100)*(1-FED_TAX),true); }},
+                {label:"Self-funding?",      fn:function(a){ return (curNW+a)*(P.portReturn/100)*(1-FED_TAX)>=ANNUAL_SPEND?"✓ Yes":"✗ No"; },
+                  fmtColor:function(a){ return (curNW+a)*(P.portReturn/100)*(1-FED_TAX)>=ANNUAL_SPEND?"#34d399":"#f87171"; }},
+                {label:"Runway (after-tax)", fn:function(a){ var m2=scenarioMetrics(a); return m2.runwayYrs>=999?"∞":m2.runwayYrs+"y"; },
+                  fmtColor:function(a){ var m2=scenarioMetrics(a); return m2.runwayYrs>=999?"#34d399":m2.runwayYrs>30?"#60a5fa":"#f59e0b"; }},
+                {label:"Yrs to $30M",        fn:function(a){ const n=curNW+a; return n>=30e6?"Done":Math.ceil(Math.log(30e6/n)/Math.log(1.074))+"y"; },
+                  fmtColor:function(a){ return (curNW+a)>=30e6?"#34d399":T.muted; }},
+                {label:"Yrs to $50M",        fn:function(a){ const n=curNW+a; return n>=50e6?"Done":Math.ceil(Math.log(50e6/n)/Math.log(1.074))+"y"; },
+                  fmtColor:function(a){ return (curNW+a)>=50e6?"#34d399":T.muted; }},
+                {label:"UBS Monte Carlo",    fn:function(a,i){ return ubsMC[i]?ubsMC[i]+"%":"—"; },
+                  fmtColor:function(a,i){ return ubsMC[i]>=85?"#34d399":T.dim; }},
+                {label:"Est. exit year",      fn:function(_,i){ return i===0?"~distressed":i===1?"2028–30":"2028–30"; },
+                  fmtColor:function(_,i){ return i===0?"#f87171":T.muted; }},
+              ].map(function(row, ri) {
+                return (
+                  <tr key={row.label} style={{ background:ri%2===0?T.deep:"transparent" }}>
+                    <td style={{ padding:"9px 8px", color:T.muted, fontFamily:"monospace", fontSize:10 }}>
+                      {row.label}
+                    </td>
+                    {scenarios.map(function(s, si) {
+                      const val = row.fn(s.amount, si);
+                      const col = row.fmtColor ? row.fmtColor(s.amount, si) : T.txt;
+                      return (
+                        <td key={s.label} style={{ padding:"9px 8px", textAlign:"right",
+                          fontFamily:"monospace", fontSize:11, fontWeight:600, color:col }}>
+                          {val}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {/* OTHER FUTURE EVENTS */}
+      <Card>
+        <Lbl>Future Liquidity Events</Lbl>
+        {[
+          {year:"2028–30", icon:"📊", label:"SpotOn exit",             value:"$10–15M est.",                    color:"#f59e0b",
+           note:"M&A most likely · IPO window closed · valuation compressed from $3.6B peak"},
+          {year:2032,      icon:"🏢", label:"Redbrick sale projected",  value:fmt(P.redbrick,true),              color:"#fbbf24",
+           note:"Confirmed future sale · one-time lump sum · LTCG applies on gain"},
+          {year:2054,      icon:"🏛️", label:"Social Security (both)",   value:"$"+((P.ssMax+P.ssHailey)/1000).toFixed(0)+"K/yr", color:"#60a5fa",
+           note:"Max benefit (age "+P.ssAge+") + Hailey · meaningful at that point"},
+        ].map(function(e) {
+          return (
+            <div key={e.year} style={{ padding:"12px 0", borderBottom:"1px solid "+T.border }}>
+              <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:4 }}>
+                <div style={{ width:40, height:40, borderRadius:10, background:T.deep,
+                  display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, flexShrink:0 }}>
+                  {e.icon}
+                </div>
+                <div style={{ flex:1 }}>
+                  <div style={{ fontSize:12, fontWeight:600, color:T.txt }}>{e.label}</div>
+                  <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginTop:1 }}>Year {e.year}</div>
+                </div>
+                <div style={{ fontSize:13, fontWeight:700, fontFamily:"monospace", color:e.color }}>{e.value}</div>
+              </div>
+              <div style={{ fontSize:9, color:T.dim, paddingLeft:52, lineHeight:1.5 }}>{e.note}</div>
+            </div>
+          );
+        })}
+      </Card>
+
+    </WideGrid>
+  );
+}
+const UBS_DATA = {
+
+  fgas: [
+    { date:"Oct 2021", nwUBS:58790221, investable:29490221, portReturn:3.84, stdDev:3.03,  spendGoal:1655000, cash:24, fi:62, equity:11, nonTrad:3,  note:"Post-Appetize sale. Heavy cash/FI, low equity." },
+    { date:"May 2022", nwUBS:48935234, investable:25985234, portReturn:5.02, stdDev:7.05,  spendGoal:1200000, cash:28, fi:22, equity:33, nonTrad:17, note:"Post-tax payment. Shifted toward equity." },
+    { date:"Dec 2023", nwUBS:48650338, investable:21888820, portReturn:6.41, stdDev:8.85,  spendGoal:1400000, cash:6,  fi:29, equity:41, nonTrad:24, note:"Equity increased significantly. Non-trad growing." },
+    { date:"Aug 2025", nwUBS:49539123, investable:21960805, portReturn:7.42, stdDev:9.90,  spendGoal:1850000, cash:3,  fi:25, equity:42, nonTrad:30, note:"Most aggressive allocation yet. Target: Longevity portfolio." },
+  ],
+
+  actual: [
+    { period:"2022",         return:-5.02, note:"Bond bear market. -13% bonds, -18% equities globally." },
+    { period:"2023",         return:10.33, note:"Strong equity rebound. Fixed income +6.75%." },
+    { period:"Oct'22–Oct'24",return:11.10, note:"Annualized 2yr. Equity +20.7%, Non-trad +5.5%." },
+    { period:"YTD Oct 2024", return:9.21,  note:"Equity +18.7%, Non-trad +5.3%." },
+  ],
+};
+
+function DRow({ label, val, color }) {
+  return (
+    <div style={{ display:"flex", justifyContent:"space-between", padding:"8px 0", borderBottom:"1px solid "+T.border }}>
+      <span style={{ fontSize:11, color:T.muted }}>{label}</span>
+      <span style={{ fontSize:12, fontFamily:"monospace", fontWeight:600, color:color||T.txt }}>{val}</span>
+    </div>
+  );
+}
+
+function UBSPerf({ wide }) {
+  const [selFGA, setSelFGA] = useState(3);
+  const fga = UBS_DATA.fgas[selFGA];
+  const prev = selFGA > 0 ? UBS_DATA.fgas[selFGA-1] : null;
+  const alloc = P.allocCurrent;
+  const target = P.allocTarget;
+  return (
+    <WideGrid wide={wide}>
+      <Card style={{ background:"linear-gradient(135deg,#050d1a 0%,#0f172a 100%)", border:"1px solid #1e3a5f" }}>
+        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom:8 }}>
+          <span style={{ fontSize:26 }}>📊</span>
+          <div>
+            <div style={{ fontSize:15, fontWeight:700, color:T.blue }}>UBS Portfolio</div>
+            <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace" }}>Legacy Multi-Family Group · Apr 2026</div>
+          </div>
+        </div>
+      </Card>
+
+      <Card>
+        <Lbl>Actual Annual Returns</Lbl>
+        {UBS_DATA.actual.map(function(a) {
+          var pos = a.return >= 0;
+          return (
+            <div key={a.year} style={{ marginBottom:8 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                <span style={{ fontSize:11, color:T.muted }}>{a.year}</span>
+                <span style={{ fontSize:12, fontFamily:"monospace", fontWeight:700, color:pos?"#34d399":"#f87171" }}>
+                  {pos?"+":""}{a.return}%
+                </span>
+              </div>
+              <div style={{ height:4, background:T.deep, borderRadius:2 }}>
+                <div style={{ height:4, borderRadius:2, width:Math.min(Math.abs(a.return)/20*100,100)+"%",
+                  background:pos?"#34d399":"#f87171" }}/>
+              </div>
+            </div>
+          );
+        })}
+      </Card>
+
+      <Card>
+        <Lbl>Current Allocation vs Target</Lbl>
+        {[
+          {label:"Cash",       curr:alloc.cash,      target:target.cash},
+          {label:"Fixed Income",curr:alloc.fixedIncome,target:target.fixedIncome},
+          {label:"Equity",     curr:alloc.equity,    target:target.equity},
+          {label:"Non-Trad",   curr:alloc.nonTrad,   target:target.nonTrad},
+        ].map(function(r){
+          var diff = (r.curr - r.target).toFixed(1);
+          var color = Math.abs(r.curr-r.target) > 5 ? "#f59e0b" : "#34d399";
+          return (
+            <div key={r.label} style={{ marginBottom:10 }}>
+              <div style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+                <span style={{ fontSize:11, color:T.muted }}>{r.label}</span>
+                <span style={{ fontSize:11, fontFamily:"monospace" }}>
+                  <span style={{ color:color }}>{r.curr}%</span>
+                  <span style={{ color:T.dim }}> / {r.target}% target</span>
+                </span>
+              </div>
+              <div style={{ height:5, background:T.deep, borderRadius:2 }}>
+                <div style={{ height:5, borderRadius:2, width:r.curr+"%", background:color }}/>
+              </div>
+            </div>
+          );
+        })}
+      </Card>
+
+      <Card>
+        <Lbl>FGA Plan — {fga.date}</Lbl>
+        <div style={{ display:"flex", gap:8, marginBottom:12, flexWrap:"wrap" }}>
+          {UBS_DATA.fgas.map(function(f, i){
+            return (
+              <button key={i} onClick={function(){setSelFGA(i);}}
+                style={{ padding:"4px 10px", borderRadius:6, border:"1px solid "+(selFGA===i?T.blue:T.border),
+                  background:selFGA===i?"#1e3a5f":"transparent", color:selFGA===i?T.blue:T.muted,
+                  fontSize:10, cursor:"pointer", fontFamily:"monospace" }}>
+                {f.date}
+              </button>
+            );
+          })}
+        </div>
+        <DRow label="Investable assets" val={fmt(fga.investable,true)} color={T.blue}/>
+        <DRow label="Projected return" val={fga.portReturn+"%"} color={T.green}/>
+        <DRow label="Std deviation" val={fga.stdDev+"%"}/>
+        <DRow label="Annual spend goal" val={fmt(fga.spendGoal,true)} color="#f59e0b"/>
+        <DRow label="Equity alloc" val={fga.equity+"%"}/>
+        <DRow label="Fixed income" val={fga.fi+"%"}/>
+        <div style={{ marginTop:10, fontSize:10, color:T.dim, fontFamily:"monospace", lineHeight:1.6 }}>
+          {fga.note}
+        </div>
+      </Card>
+
+      <Card>
+        <Lbl>Key Metrics · Apr 2026</Lbl>
+        <DRow label="Portfolio projected return" val={P.portReturn+"%"} color={T.blue}/>
+        <DRow label="Target return" val={P.targetReturn+"%"} color={T.green}/>
+        <DRow label="Std deviation" val={P.stdDev+"%"}/>
+        <DRow label="Bear market scenario" val={P.bearMarket+"%"} color="#f87171"/>
+        <DRow label="UBS investable (Aug 2025)" val={fmt(P.investAssets,true)} color={T.blue}/>
+        <DRow label="Plan date" val={P.planDate}/>
+      </Card>
+    </WideGrid>
+  );
+}
+
+
+function CondoAnalysis({ wide }) {
+  const [sellPrice, setSellPrice] = useState(3600000);
+  const [scenario, setScenario] = useState("hold");
+
+  // ── EXACT MONTHLY COSTS ─────────────────────────────────────────────
+  var mortgageInterestMo = 14375.00;          // UBS mortgage statement (interest-only)
+  var hoaMonthly         = 2048.92;           // GREEN DIAMOND CO — Mint transactions
+  var propTaxMo          = 44296.81 / 12;     // $44,296.81/yr Miami-Dade 2025 ÷ 12 = $3,691.40
+  var totalMonthlyCost   = mortgageInterestMo + hoaMonthly + propTaxMo; // $20,115.32
+
+  // FL domicile saving
+  var portGross        = 19716233 * (P.portReturn / 100);
+  var flSavingPerYr    = portGross * 0.133;
+  var flSavingPerMo    = flSavingPerYr / 12;             // ~$16,214/mo
+  var netCostPerMonth  = totalMonthlyCost - flSavingPerMo; // ~$3,901/mo net
+  var annualCost       = totalMonthlyCost * 12;
+  var trueCashDrain    = annualCost - flSavingPerYr;
+  var flTaxSaving      = flSavingPerYr; // alias used by FL domicile section below
+
+  // How much price must rise per month to cover net holding cost
+  // Net cost must be recovered via sale (after 6% agent+closing), so divide by 0.94
+  var priceRiseNeededPerMo  = netCostPerMonth / 0.94;
+  var priceRiseNeededPerYr  = priceRiseNeededPerMo * 12;
+  var priceRisePctPerYr     = (priceRiseNeededPerYr / sellPrice * 100);
+
+  // Spoton tax savings aliases
+  var spotonTaxSaving_low  = P.spotonBear * 0.133;
+  var spotonTaxSaving_high = P.spotonBull * 0.133;
+
+  // ── FIXED CASH OUT (already spent) ──────────────────────────────────
+  var monthsOwned     = 40; // Dec 2022 – Apr 2026
+  var purchase        = 3000000;
+  var reno            = 640000;
+  var mortgageIntPaid = Math.round(mortgageInterestMo * monthsOwned);  // 575,000
+  var hoaPaid         = Math.round(hoaMonthly * monthsOwned + 8654);   // 90,611 (incl special assessment)
+  var propTaxPaid     = Math.round(propTaxMo * monthsOwned);           // 147,657
+  var flSavingsToDate = Math.round(flSavingPerYr * (monthsOwned/12));  // 648,572
+  var grossCashOut    = purchase + reno + mortgageIntPaid + hoaPaid + propTaxPaid;
+  var netCashOut      = grossCashOut - flSavingsToDate;
+  var otherCosts      = reno + mortgageIntPaid + hoaPaid + propTaxPaid - flSavingsToDate;
+
+  // ── SALE PROCEEDS (slider) ───────────────────────────────────────────
+  var agentFee       = Math.round(sellPrice * 0.05);
+  var closingCost    = Math.round(sellPrice * 0.01);
+  var mortgagePayoff = 3000000;
+  // Cap gains: taxable only above (basis $3.64M + $500K primary exclusion) = $4.14M
+  var capitalGain    = sellPrice - 3640000;
+  var taxableGain    = Math.max(0, capitalGain - 500000);
+  var fedCapGainsTax = Math.round(taxableGain * 0.238);
+  var netProceeds    = sellPrice - agentFee - closingCost - mortgagePayoff - fedCapGainsTax;
+
+  // ── NET P&L ──────────────────────────────────────────────────────────
+  // Purchase price is recovered via mortgage payoff — so P&L is
+  // net proceeds vs remaining out-of-pocket (reno + carry net of FL savings)
+  var netPL = netProceeds - otherCosts;
+
+  // Aliases for sections that haven't been updated
+  var interestOnlyMonthlyCost = totalMonthlyCost;
+  var annualCashCost          = annualCost;
+  var netAfterTax             = netProceeds;
+  var annualReturnOnProceeds  = Math.max(0, netProceeds) * NET_RATE;
+  var mortgagePandI           = mortgageInterestMo;
+  var mortgagePrincipalMo     = 0;
+  var netCashIn               = netCashOut; // alias
+
+  return (
+    <WideGrid wide={wide}>
+
+      {/* HEADER */}
+      <Card style={{ background:"linear-gradient(135deg,#030c1a 0%,#0f172a 100%)",
+        border:"1px solid #1e3a5f", marginBottom:12 }}>
+        <div style={{ display:"flex", alignItems:"flex-start", gap:12 }}>
+          <span style={{ fontSize:32 }}>🏠</span>
+          <div style={{ flex:1 }}>
+            <div style={{ fontSize:15, fontWeight:700, color:T.blue }}>Green Diamond #3503</div>
+            <div style={{ fontSize:11, color:T.muted, marginTop:2 }}>4775 Collins Ave · Miami Beach FL 33140</div>
+            <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginTop:4 }}>
+              Floor 35 · 1,980 sqft · 3bd/3ba · Built 2000 · Full gut reno 2022 · Primary residence
+            </div>
+          </div>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:8, marginTop:14 }}>
+          {[
+            { label:"Purchase price",   value:fmt(CONDO.purchasePrice,true),  color:T.blue   },
+            { label:"Renovation",       value:"+"+fmt(CONDO.renovationCost,true), color:"#f59e0b" },
+            { label:"Total basis",      value:fmt(CONDO.totalBasis,true),     color:T.muted  },
+          ].map(function(s){
+            return (
+              <div key={s.label} style={{ background:T.deep, borderRadius:8, padding:"10px" }}>
+                <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:3 }}>{s.label}</div>
+                <div style={{ fontSize:13, fontWeight:700, color:s.color }}>{s.value}</div>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+
+      {/* MONTHLY COSTS */}
+      <Card>
+        <Lbl>Monthly Carrying Costs — Exact Figures</Lbl>
+        <div style={{ fontSize:10, color:"#f59e0b", fontFamily:"monospace", marginBottom:12 }}>
+          Interest-only loan · $0 principal · balance stays $3,000,000
+        </div>
+        {[
+          { label:"Mortgage interest",  exact:"$14,375.00/mo",   color:"#f87171", note:"UBS bank statement · confirmed" },
+          { label:"HOA",                exact:"$2,048.92/mo",    color:"#f59e0b", note:"GREEN DIAMOND CO · Mint transactions" },
+          { label:"Property tax",       exact:"$3,691.40/mo",    color:"#a78bfa", note:"$44,296.81 ÷ 12 · Miami-Dade 2025 tax bill" },
+        ].map(function(r,i){
+          return (
+            <div key={i} style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start",
+              padding:"8px 0", borderBottom:"1px solid "+T.border }}>
+              <div>
+                <div style={{ fontSize:12, color:T.txt }}>{r.label}</div>
+                <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:2 }}>{r.note}</div>
+              </div>
+              <div style={{ fontSize:14, fontWeight:700, color:r.color, fontFamily:"monospace" }}>{r.exact}</div>
+            </div>
+          );
+        })}
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+          padding:"10px 0 0", marginTop:2 }}>
+          <div style={{ fontSize:13, fontWeight:700, color:T.txt }}>Total monthly</div>
+          <div style={{ fontSize:18, fontWeight:800, color:"#f87171", fontFamily:"monospace" }}>$20,115.32</div>
+        </div>
+        <div style={{ display:"flex", justifyContent:"space-between", fontSize:11,
+          color:T.dim, marginTop:4, paddingBottom:8, borderBottom:"1px solid "+T.border }}>
+          <span>Annual cost</span>
+          <span style={{ fontFamily:"monospace" }}>$241,383.85/yr</span>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginTop:12 }}>
+          <div style={{ background:T.deep, borderRadius:8, padding:"10px 12px" }}>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>FL TAX SAVING/MO</div>
+            <div style={{ fontSize:15, fontWeight:700, color:"#34d399" }}>{fmt(Math.round(flSavingPerMo),true)}</div>
+            <div style={{ fontSize:9, color:T.dim, marginTop:2 }}>vs CA state income tax</div>
+          </div>
+          <div style={{ background:T.deep, borderRadius:8, padding:"10px 12px" }}>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:4 }}>NET COST/MO</div>
+            <div style={{ fontSize:15, fontWeight:700, color:"#f59e0b" }}>{fmt(Math.round(netCostPerMonth),true)}</div>
+            <div style={{ fontSize:9, color:T.dim, marginTop:2 }}>after FL benefit</div>
+          </div>
+        </div>
+      </Card>
+
+      {/* FL DOMICILE VALUE */}
+      <Card style={{ border:"1px solid #34d39940", background:"#34d39906" }}>
+        <Lbl>Florida Domicile Tax Value</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          The biggest financial reason to keep this property — no CA/NY state income tax
+        </div>
+        {[
+          { label:"Portfolio gross earnings/yr",     value:fmt(portGross,true),             color:T.muted },
+          { label:"CA state tax avoided (13.3%)",    value:fmt(flSavingPerYr,true)+"/yr",      color:"#34d399", big:true },
+          { label:"SpotOn $10M FL vs CA saving",     value:fmt(spotonTaxSaving_low,true),   color:"#34d399" },
+          { label:"SpotOn $15M FL vs CA saving",     value:fmt(spotonTaxSaving_high,true),  color:"#34d399" },
+        ].map(function(r){
+          return (
+            <div key={r.label} style={{ display:"flex", justifyContent:"space-between",
+              alignItems:"center", padding:"9px 0", borderBottom:"1px solid "+T.border }}>
+              <span style={{ fontSize:11, color:T.muted }}>{r.label}</span>
+              <span style={{ fontSize:r.big?16:12, fontWeight:r.big?700:600,
+                fontFamily:"monospace", color:r.color }}>{r.value}</span>
+            </div>
+          );
+        })}
+        <div style={{ marginTop:12, background:T.deep, border:"1px solid #34d39930",
+          borderRadius:8, padding:"10px 12px" }}>
+          <div style={{ fontSize:11, color:T.muted, lineHeight:1.7 }}>
+            Annual carrying cost: <span style={{ color:"#f87171", fontWeight:600 }}>
+              {fmt(annualCashCost,true)}</span> cash drain.
+            FL domicile saves: <span style={{ color:"#34d399", fontWeight:600 }}>
+              {fmt(flTaxSaving,true)}</span>/yr vs CA.{" "}
+            Net true annual cost: <span style={{ fontWeight:700,
+              color:trueCashDrain<=0?"#34d399":"#f59e0b" }}>
+              {trueCashDrain<=0 ? "Net positive — FL savings exceed carrying cost" :
+                fmt(trueCashDrain,true)+"/yr after FL tax benefit"}</span>.
+            For SpotOn alone, FL domicile saves <span style={{ color:"#34d399", fontWeight:600 }}>
+              {fmt(spotonTaxSaving_low,true)}–{fmt(spotonTaxSaving_high,true)}</span> in state tax.
+          </div>
+        </div>
+      </Card>
+
+      {/* MARKET VALUE ANALYSIS */}
+      <Card>
+        <Lbl>Market Value — What Is It Worth?</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          Zillow doesn't reflect full reno · comps from Green Diamond sales 2024-2025
+        </div>
+        {[
+          { label:"Zillow / base estimate (unadjusted)", value:CONDO.zillowEst,    color:T.dim,
+            note:"~$1,414/sqft · ignores full gut renovation" },
+          { label:"Reno-adjusted estimate",              value:CONDO.renoAdjusted, color:"#f59e0b",
+            note:"Adding $800K premium for studs-out renovation · most likely value" },
+          { label:"Bull case (fl 35, views, full reno)", value:CONDO.highEstimate, color:"#34d399",
+            note:"Strong market, motivated buyer — possible but not assured" },
+          { label:"Your total cost basis",               value:CONDO.totalBasis,   color:"#f87171",
+            note:"Purchase $3.0M (Dec 28 2022, Compass) + renovation $640K" },
+          { label:"Outstanding mortgage",                value:CONDO.mortgageBalance, color:"#f87171",
+            note:"UBS credit line secured by property" },
+        ].map(function(r){
+          var equity = r.value - CONDO.mortgageBalance;
+          return (
+            <div key={r.label} style={{ marginBottom:12, paddingBottom:12,
+              borderBottom:"1px solid "+T.border }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline",
+                marginBottom:3 }}>
+                <span style={{ fontSize:11, color:T.txt, flex:1, paddingRight:8 }}>{r.label}</span>
+                <span style={{ fontSize:14, fontWeight:700, fontFamily:"monospace",
+                  color:r.color, flexShrink:0 }}>{fmt(r.value,true)}</span>
+              </div>
+              <div style={{ fontSize:9, color:T.dim, marginBottom:4 }}>{r.note}</div>
+              {r.value > CONDO.mortgageBalance && (
+                <div style={{ fontSize:10, color:equity>0?"#34d399":"#f87171",
+                  fontFamily:"monospace" }}>
+                  Equity: {fmt(equity,true)} ({(equity/r.value*100).toFixed(0)}%)
+                </div>
+              )}
+            </div>
+          );
+        })}
+        <div style={{ background:"#f59e0b10", border:"1px solid #f59e0b30",
+          borderRadius:8, padding:"10px 12px", marginTop:4 }}>
+          <div style={{ fontSize:10, color:"#f59e0b", fontFamily:"monospace", marginBottom:4 }}>
+            MARKET CONTEXT (Q4 2025 / Q1 2026)
+          </div>
+          <div style={{ fontSize:11, color:T.muted, lineHeight:1.6 }}>
+            Miami luxury condos are a buyer's market — 88 days median DOM in 2025, up 13% YoY.
+            Mid-Beach/Millionaire's Row saw the strongest price gains in Q4 2025 (+27% YoY psf)
+            but supply is elevated. Selling now means competing with motivated sellers.
+            FIFA World Cup 2026 in Miami may provide a timing tailwind for H1 2026 listings.
+          </div>
+        </div>
+      </Card>
+
+      {/* SELL SCENARIO CALCULATOR */}
+      {/* SELL ANALYSIS */}
+      <Card>
+        <Lbl>If You Sell — P&L Analysis</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          Adjust sale price · cap gains tax kicks in above $4.14M (basis $3.64M + $500K exclusion)
+        </div>
+        <div style={{ marginBottom:14 }}>
+          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:8 }}>
+            <span style={{ fontSize:11, color:T.muted }}>Sale price</span>
+            <span style={{ fontSize:18, fontWeight:700, fontFamily:"monospace", color:T.blue }}>{fmt(sellPrice,true)}</span>
+          </div>
+          <input type="range" min={2500000} max={5000000} step={50000}
+            value={sellPrice} onChange={function(e){ setSellPrice(parseInt(e.target.value)); }}
+            style={{ width:"100%", accentColor:T.blue }} />
+          <div style={{ display:"flex", justifyContent:"space-between", marginTop:4 }}>
+            <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>$2.5M</span>
+            <span style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>$5.0M</span>
+          </div>
+        </div>
+        {[
+          { label:"Gross sale price",               value: sellPrice,       color:T.blue,    sign:"+"  },
+          { label:"Agent commission (5%)",          value:-agentFee,        color:"#f87171", sign:"-" },
+          { label:"Closing costs (1%)",             value:-closingCost,     color:"#f87171", sign:"-" },
+          { label:"Mortgage payoff (...1300)",      value:-mortgagePayoff,  color:"#f87171", sign:"-", note:"Interest-only — balance unchanged at $3,000,000" },
+          { label:"Cap gains tax (23.8%)",          value:-fedCapGainsTax,  color: fedCapGainsTax>0?"#f87171":T.dim, sign:"-",
+            note: taxableGain>0 ? "Gain $"+Math.round(capitalGain/1000)+"K minus $500K exclusion = $"+Math.round(taxableGain/1000)+"K taxable"
+                                : "No tax — sale price below $4.14M threshold (basis + $500K exclusion)" },
+        ].map(function(r,i,arr){
+          var isLast = i===arr.length-1;
+          return (
+            <div key={i} style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start",
+              padding:"8px 0", borderBottom:isLast?"none":"1px solid "+T.border+"44" }}>
+              <div style={{ flex:1, paddingRight:8 }}>
+                <div style={{ fontSize:11, color:T.muted }}>{r.label}</div>
+                {r.note && <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:1 }}>{r.note}</div>}
+              </div>
+              <div style={{ fontSize:12, fontWeight:600, color:r.color, fontFamily:"monospace", flexShrink:0 }}>
+                {r.value===0 ? "$0" : (r.value<0?"-":r.sign)+fmt(Math.abs(r.value),true)}
+              </div>
+            </div>
+          );
+        })}
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+          paddingTop:10, borderTop:"2px solid "+T.border, marginTop:4 }}>
+          <div style={{ fontSize:13, fontWeight:700, color:T.txt }}>Net sale proceeds</div>
+          <div style={{ fontSize:20, fontWeight:800,
+            color:netProceeds>=0?"#34d399":"#f87171", fontFamily:"monospace" }}>
+            {netProceeds>=0?"+":"-"}{fmt(Math.abs(netProceeds),true)}
+          </div>
+        </div>
+        {netProceeds > 0 && (
+          <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginTop:8 }}>
+            If invested at {(NET_RATE*100).toFixed(1)}% after-tax: {fmt(Math.round(netProceeds*NET_RATE),true)}/yr passive income
+          </div>
+        )}
+      </Card>
+
+      {/* TRUE ALL-IN P&L */}
+      <Card style={{ border:"1px solid #1e3a5f" }}>
+        <Lbl>Net P&L — All-In Since Purchase</Lbl>
+        <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:14 }}>
+          Fixed costs paid to date vs net proceeds from slider sale price
+        </div>
+
+        {/* SECTION 1: NET CASH OUT */}
+        <div style={{ fontSize:10, color:"#f87171", fontFamily:"monospace", letterSpacing:1, marginBottom:8 }}>
+          CASH OUT — TOTAL SPENT TO DATE
+        </div>
+        {[
+          { label:"Purchase price",         value: 3000000, color:T.blue,    note:"Recovered via mortgage payoff on sale" },
+          { label:"Renovation",             value:   640000, color:"#f59e0b", note:"Full gut reno · completed May 2023" },
+          { label:"Mortgage interest paid", value: mortgageIntPaid, color:"#f87171", note:"$14,375.00 × 40 months" },
+          { label:"HOA paid",               value: hoaPaid,         color:"#f87171", note:"$2,048.92 × 40mo + $8,654 special assessment" },
+          { label:"Property tax paid",      value: propTaxPaid,     color:"#f87171", note:"$44,296.81/yr × 3.33 yrs" },
+          { label:"Less: FL tax savings",   value:-flSavingsToDate, color:"#34d399", note:fmt(Math.round(flSavingPerYr),true)+"/yr × 3.33 yrs vs CA state income tax" },
+        ].map(function(r,i,arr){
+          return (
+            <div key={i} style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start",
+              padding:"6px 0", borderBottom:i===arr.length-1?"none":"1px solid "+T.border+"33" }}>
+              <div style={{ flex:1, paddingRight:8 }}>
+                <div style={{ fontSize:11, color:T.muted }}>{r.label}</div>
+                {r.note && <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:1 }}>{r.note}</div>}
+              </div>
+              <div style={{ fontSize:12, fontWeight:600, color:r.color, fontFamily:"monospace", flexShrink:0 }}>
+                {r.value<0?"-":"+"}{fmt(Math.abs(r.value),true)}
+              </div>
+            </div>
+          );
+        })}
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+          paddingTop:8, borderTop:"2px solid #f87171", marginTop:4, marginBottom:16 }}>
+          <div>
+            <div style={{ fontSize:12, fontWeight:700, color:T.txt }}>Net cash out</div>
+            <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:1 }}>Total spent minus FL tax savings earned</div>
+          </div>
+          <div style={{ fontSize:16, fontWeight:800, color:"#f87171", fontFamily:"monospace" }}>
+            -{fmt(netCashOut,true)}
+          </div>
+        </div>
+
+        {/* SECTION 2: SALE PROCEEDS */}
+        <div style={{ fontSize:10, color:"#34d399", fontFamily:"monospace", letterSpacing:1, marginBottom:8 }}>
+          PROCEEDS FROM SALE AT {fmt(sellPrice,true)}
+        </div>
+        {[
+          { label:"Gross sale price",          value: sellPrice,      color:T.blue },
+          { label:"Agent commission (5%)",     value:-agentFee,       color:"#f87171" },
+          { label:"Closing costs (1%)",        value:-closingCost,    color:"#f87171" },
+          { label:"Mortgage payoff",           value:-mortgagePayoff, color:"#f87171", note:"UBS (...1300) · interest-only, balance unchanged" },
+          { label:"Cap gains tax (23.8%)",     value:-fedCapGainsTax, color:fedCapGainsTax>0?"#f87171":T.dim,
+            note:taxableGain>0 ? "On $"+fmt(taxableGain,true)+" taxable gain (above $4.14M threshold)"
+                               : "None — below $4.14M threshold (basis $3.64M + $500K exclusion)" },
+        ].map(function(r,i,arr){
+          return (
+            <div key={i} style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start",
+              padding:"6px 0", borderBottom:i===arr.length-1?"none":"1px solid "+T.border+"33" }}>
+              <div style={{ flex:1, paddingRight:8 }}>
+                <div style={{ fontSize:11, color:T.muted }}>{r.label}</div>
+                {r.note && <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:1 }}>{r.note}</div>}
+              </div>
+              <div style={{ fontSize:12, fontWeight:600, color:r.color, fontFamily:"monospace", flexShrink:0 }}>
+                {r.value===0?"$0":(r.value<0?"-":"+")+fmt(Math.abs(r.value),true)}
+              </div>
+            </div>
+          );
+        })}
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+          paddingTop:8, borderTop:"2px solid #34d399", marginTop:4, marginBottom:16 }}>
+          <div style={{ fontSize:12, fontWeight:700, color:T.txt }}>Net sale proceeds</div>
+          <div style={{ fontSize:16, fontWeight:800,
+            color:netProceeds>=0?"#34d399":"#f87171", fontFamily:"monospace" }}>
+            {netProceeds>=0?"+":"-"}{fmt(Math.abs(netProceeds),true)}
+          </div>
+        </div>
+
+        {/* SECTION 3: ACTUAL NET */}
+        <div style={{ background:T.deep, borderRadius:10, padding:"14px 16px",
+          border:"2px solid "+(netPL>=0?"#34d39966":"#f8717166") }}>
+          <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:10, letterSpacing:1 }}>
+            ACTUAL NET AT {fmt(sellPrice,true)} SALE
+          </div>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
+            <span style={{ fontSize:11, color:T.muted }}>Net sale proceeds</span>
+            <span style={{ fontSize:13, fontFamily:"monospace", fontWeight:600,
+              color:netProceeds>=0?"#34d399":"#f87171" }}>
+              {netProceeds>=0?"+":"-"}{fmt(Math.abs(netProceeds),true)}
+            </span>
+          </div>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+            paddingBottom:10, borderBottom:"1px solid "+T.border }}>
+            <span style={{ fontSize:11, color:T.muted }}>Net cash out (total spent)</span>
+            <span style={{ fontSize:13, fontFamily:"monospace", fontWeight:600, color:"#f87171" }}>
+              -{fmt(netCashOut,true)}
+            </span>
+          </div>
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:10 }}>
+            <div>
+              <div style={{ fontSize:15, fontWeight:700, color:T.txt }}>ACTUAL NET</div>
+              <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginTop:3 }}>
+                Breakeven ≈ $7.24M sale price
+              </div>
+            </div>
+            <div style={{ fontSize:28, fontWeight:800,
+              color:netPL>=0?"#34d399":"#f87171", fontFamily:"monospace" }}>
+              {netPL>=0?"+":""}{fmt(Math.round(netPL),true)}
+            </div>
+          </div>
+        </div>
+
+        {/* HOLDING COST CLOCK */}
+        <div style={{ marginTop:12, background:T.deep, borderRadius:8, padding:"12px 14px" }}>
+          <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace", marginBottom:8, letterSpacing:1 }}>
+            COST OF WAITING TO SELL
+          </div>
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:8 }}>
+            <div>
+              <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>Net cost per month</div>
+              <div style={{ fontSize:15, fontWeight:700, color:"#f59e0b" }}>{fmt(Math.round(netCostPerMonth),true)}</div>
+              <div style={{ fontSize:9, color:T.dim, marginTop:1 }}>after FL tax saving</div>
+            </div>
+            <div>
+              <div style={{ fontSize:9, color:T.dim, fontFamily:"monospace" }}>Needed price rise/mo</div>
+              <div style={{ fontSize:15, fontWeight:700, color:"#f87171" }}>{fmt(Math.round(priceRiseNeededPerMo),true)}</div>
+              <div style={{ fontSize:9, color:T.dim, marginTop:1 }}>to break even on cost</div>
+            </div>
+          </div>
+          <div style={{ fontSize:10, color:T.muted, lineHeight:1.7, paddingTop:8, borderTop:"1px solid "+T.border }}>
+            Waiting 1 more year to sell: condo must appreciate{" "}
+            <span style={{ color:"#f87171", fontWeight:600 }}>{fmt(Math.round(priceRiseNeededPerYr),true)}</span>
+            {" "}({priceRisePctPerYr.toFixed(1)}% on current {fmt(sellPrice,true)} value) just to cover net holding costs.
+            At current Zillow ~$3.5M, that would be {((priceRiseNeededPerYr/3500000)*100).toFixed(1)}% annual appreciation needed.
+          </div>
+        </div>
+      </Card>
+
+
+      {/* HOLD vs SELL VERDICT */}
+      {/* HOLD vs SELL VERDICT */}
+      <Card style={{ border:"1px solid #f59e0b40", background:"#f59e0b04" }}>
+        <Lbl>Hold vs Sell — The Real Decision</Lbl>
+        <div style={{ display:"flex", flexDirection:"column", gap:10, marginBottom:14 }}>
+          {[
+            { side:"HOLD",
+              color:"#34d399",
+              pros:[
+                "FL domicile saves ~"+fmt(flTaxSaving,true)+"/yr in state income tax vs CA/NY",
+                "SpotOn: saves "+fmt(spotonTaxSaving_low,true)+"–"+fmt(spotonTaxSaving_high,true)+" in one event",
+                "Full reno = differentiated asset in the building vs unrenovated comps",
+                "Floor 35 with ocean views — hard to replicate at this price point",
+                "Luxury real estate mid-Beach saw +27% psf gain in Q4 2025",
+              ],
+              cons:[
+                fmt(totalMonthlyCost,true)+"/mo gross carrying cost",
+                fmt(annualCashCost,true)+"/yr true cash drain (interest + HOA + tax)",
+                "Buyer's market — 88 days DOM, elevated inventory, sellers discounting",
+                "Zillow ~$3.5M vs $3.64M cost basis (purchase + reno) — near breakeven on basis",
+                "Real estate is illiquid — capital locked while portfolio runs a drawdown",
+              ],
+            },
+            { side:"SELL",
+              color:"#60a5fa",
+              pros:[
+                "Frees "+fmt(Math.round(netAfterTax/100000)*100000,true)+" in proceeds to invest at ~5.65% net",
+                "Eliminates "+fmt(annualCashCost,true)+"/yr in cash drain",
+                "Removes illiquid asset from balance sheet during portfolio drawdown period",
+                "$500K primary residence exclusion reduces capital gain (married filing jointly)",
+                "Can re-establish FL domicile via rental with far lower carrying cost",
+              ],
+              cons:[
+                "Lose FL domicile tax benefit (~"+fmt(flTaxSaving,true)+"/yr) unless you find another FL primary",
+                "Selling in a buyer's market — likely need to price at $3.4M–$3.6M to move in 90 days",
+                "At $3.5M sale price: net after-tax ~"+fmt(3500000*0.94-CONDO.mortgageBalance-Math.max(0,(3500000-CONDO.totalBasis-500000))*0.238,true),
+                "Locking in a loss vs $3.64M basis (purchase + reno) if selling below that",
+                "Disruption of lifestyle and primary residence",
+              ],
+            },
+          ].map(function(side){
+            return (
+              <div key={side.side} style={{ background:side.color+"08",
+                border:"1px solid "+side.color+"30", borderRadius:10, padding:"12px 14px" }}>
+                <div style={{ fontSize:12, fontWeight:700, color:side.color, marginBottom:10 }}>
+                  {side.side}
+                </div>
+                <div style={{ fontSize:10, color:"#34d399", fontFamily:"monospace",
+                  marginBottom:4 }}>FOR</div>
+                {side.pros.map(function(p,i){
+                  return <div key={i} style={{ fontSize:11, color:T.muted,
+                    marginBottom:5, paddingLeft:10, position:"relative" }}>
+                    <span style={{ position:"absolute", left:0, color:"#34d399" }}>✓</span>{p}
+                  </div>;
+                })}
+                <div style={{ fontSize:10, color:"#f87171", fontFamily:"monospace",
+                  marginTop:8, marginBottom:4 }}>AGAINST</div>
+                {side.cons.map(function(c,i){
+                  return <div key={i} style={{ fontSize:11, color:T.muted,
+                    marginBottom:5, paddingLeft:10, position:"relative" }}>
+                    <span style={{ position:"absolute", left:0, color:"#f87171" }}>✗</span>{c}
+                  </div>;
+                })}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* My view */}
+        <div style={{ background:T.deep, border:"1px solid "+T.border,
+          borderRadius:8, padding:"12px 14px" }}>
+          <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginBottom:6 }}>
+            ANALYSIS · NOT FINANCIAL ADVICE
+          </div>
+          <div style={{ fontSize:11, color:T.muted, lineHeight:1.8 }}>
+            The financial case for holding is almost entirely driven by the FL domicile benefit.
+            Without it, the math clearly favors selling — you'd free up meaningful capital
+            and eliminate a significant cash drain during a period when your portfolio is
+            already running a drawdown.{"\n\n"}
+            The key question is whether you can maintain FL domicile cheaply without this property.
+            A $5–8K/month rental in Miami Beach would cost far less than the{" "}
+            {fmt(interestOnlyMonthlyCost,true)}/mo cash drain on this condo — and still keep
+            your FL residency intact for the SpotOn proceeds. That{" "}
+            <span style={{ color:"#34d399", fontWeight:600 }}>rent-not-own</span> path
+            deserves serious consideration.{"\n\n"}
+            If you sell: price at $3.5–3.7M, list in Q1/Q2 2026 ahead of FIFA World Cup
+            demand, and simultaneously secure a rental in the same neighborhood to preserve domicile.
+            At $3.6M, you'd net roughly{" "}
+            <span style={{ color:"#34d399", fontWeight:600 }}>
+              {fmt(Math.round((3600000*0.94-CONDO.mortgageBalance-Math.max(0,(3600000-CONDO.totalBasis-500000))*0.238)/50000)*50000,true)}</span>{" "}
+            after commission, mortgage payoff, and taxes — capital that immediately starts
+            compounding rather than draining.
+          </div>
+        </div>
+      </Card>
+
+    </WideGrid>
+  );
+}
+function App() {
+  const [tab, setTab] = useState("overview");
+  const [ready, setReady] = useState(false);
+  const [wide, setWide] = useState(typeof window !== "undefined" && window.innerWidth >= 768);
+
+  useEffect(function() {
+    var t = setTimeout(function() { setReady(true); }, 60);
+    function onResize() { setWide(window.innerWidth >= 768); }
+    window.addEventListener("resize", onResize);
+    return function() { clearTimeout(t); window.removeEventListener("resize", onResize); };
+  }, []);
+
+  const derived = useMemo(function() {
+    const nwArr = Object.entries(NW2022);
+    const curNW = nwArr[nwArr.length - 1][1];
+    const prevNW = nwArr[nwArr.length - 2][1];
+    const nwDelta = curNW - prevNW;
+    const nwDeltaPct = (nwDelta / prevNW * 100).toFixed(1);
+    const spendArr = Object.entries(SP2022);
+    const curSpend = spendArr[spendArr.length - 1][1];
+    const recent12 = spendArr.slice(-13, -1);
+    const avgSpend = recent12.reduce(function(s, e) { return s + e[1]; }, 0) / recent12.length;
+    const totalAssets = D.groups.filter(function(g) { return g.value > 0; }).reduce(function(s, g) { return s + g.value; }, 0);
+    const totalLiab = Math.abs(D.groups.find(function(g) { return g.name === "Liabilities"; }).value);
+    return { curNW, prevNW, nwDelta, nwDeltaPct, curSpend, avgSpend, totalAssets, totalLiab };
+  }, []);
+
+  const content = (
+    <>
+      {tab === "overview" && <Overview derived={derived} wide={wide} />}
+      {tab === "spending"  && <Spending derived={derived} wide={wide} />}
+      {tab === "networth"  && <NetWorth derived={derived} wide={wide} />}
+      {tab === "vsworld"   && <VsWorld derived={derived} wide={wide} />}
+      {tab === "insights"  && <Insights derived={derived} wide={wide} />}
+      {tab === "spoton"    && <SpotOn derived={derived} wide={wide} />}
+      {tab === "ubsperf"   && <UBSPerf wide={wide} />}
+      {tab === "condo"     && <CondoAnalysis wide={wide} />}
+    </>
+  );
+
+  if (wide) {
+    return (
+      <div style={{ display:"flex", height:"100vh", background:T.bg, color:T.txt,
+        fontFamily:"system-ui, sans-serif", overflow:"hidden" }}>
+
+        {/* SIDEBAR NAV */}
+        <div style={{ width:200, flexShrink:0, background:T.surf,
+          borderRight:"1px solid "+T.border, display:"flex", flexDirection:"column",
+          padding:"0 0 24px 0", overflowY:"auto" }}>
+
+          {/* Sidebar header */}
+          <div style={{ padding:"24px 20px 20px", borderBottom:"1px solid "+T.border }}>
+            <div style={{ fontSize:11, fontWeight:700, letterSpacing:3, color:T.blue,
+              fontFamily:"monospace", textTransform:"uppercase", marginBottom:4 }}>Portfolio</div>
+            <div style={{ fontSize:22, fontWeight:700, letterSpacing:-0.5, color:T.txt }}>
+              {fmt(derived.curNW)}
+            </div>
+            <div style={{ fontSize:11, fontFamily:"monospace", marginTop:3,
+              color:derived.nwDelta >= 0 ? T.green : T.red }}>
+              {derived.nwDelta >= 0 ? "▲" : "▼"} {fmt(Math.abs(derived.nwDelta), true)} this month
+            </div>
+            <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginTop:2 }}>
+              As of {D.asOf}
+            </div>
+          </div>
+
+          {/* Nav items */}
+          <div style={{ flex:1, padding:"12px 10px" }}>
+            {TABS.map(function(t) {
+              const active = tab === t.id;
+              return (
+                <button key={t.id} onClick={function() { setTab(t.id); }}
+                  style={{ width:"100%", display:"flex", alignItems:"center", gap:12,
+                    padding:"11px 12px", marginBottom:2, border:"none", borderRadius:10,
+                    background:active ? T.blue+"18" : "transparent",
+                    cursor:"pointer", textAlign:"left",
+                    borderLeft: active ? "3px solid "+T.blue : "3px solid transparent",
+                    transition:"all 0.15s", WebkitTapHighlightColor:"transparent" }}>
+                  <span style={{ fontSize:18, lineHeight:1 }}>{t.icon}</span>
+                  <span style={{ fontSize:13, fontWeight:active ? 700 : 400,
+                    color:active ? T.blue : T.muted, letterSpacing:0.2 }}>
+                    {t.label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* MAIN CONTENT */}
+        <div style={{ flex:1, overflowY:"auto", WebkitOverflowScrolling:"touch" }}>
+          <div style={{ maxWidth:960, margin:"0 auto", padding:"24px 28px 48px",
+            opacity:ready ? 1 : 0, transition:"opacity 0.35s" }}>
+            {content}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ height:"100vh", background:T.bg, color:T.txt,
+      fontFamily:"system-ui, sans-serif", display:"flex", flexDirection:"column",
+      maxWidth:720, margin:"0 auto", overflow:"hidden" }}>
+
+      {/* HEADER */}
+      <div style={{ padding:"16px 16px 12px", borderBottom:"1px solid " + T.border,
+        background:"linear-gradient(180deg,#0f172a 0%," + T.bg + " 100%)",
+        display:"flex", alignItems:"center", justifyContent:"space-between", flexShrink:0 }}>
+        <div>
+          <div style={{ fontSize:11, fontWeight:700, letterSpacing:3, color:T.blue,
+            fontFamily:"monospace", textTransform:"uppercase" }}>Portfolio</div>
+          <div style={{ fontSize:10, color:T.dim, fontFamily:"monospace", marginTop:1 }}>
+            As of {D.asOf}
+          </div>
+        </div>
+        <div style={{ textAlign:"right" }}>
+          <div style={{ fontSize:20, fontWeight:700, letterSpacing:-0.5 }}>{fmt(derived.curNW)}</div>
+          <div style={{ fontSize:11, color:derived.nwDelta >= 0 ? T.green : T.red,
+            fontFamily:"monospace", marginTop:1 }}>
+            {derived.nwDelta >= 0 ? "▲" : "▼"} {fmt(Math.abs(derived.nwDelta), true)} this month
+          </div>
+        </div>
+      </div>
+
+      {/* SCROLLABLE CONTENT — flex:1 + overflow:auto gives it the remaining height */}
+      <div style={{ flex:1, overflowY:"auto", overflowX:"hidden",
+        padding:"14px 14px 110px",
+        opacity:ready ? 1 : 0, transition:"opacity 0.35s",
+        WebkitOverflowScrolling:"touch" }}>
+        {content}
+      </div>
+
+      {/* BOTTOM NAV */}
+      <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)",
+        width:"100%", maxWidth:720,
+        background:"rgba(9,15,28,0.96)", backdropFilter:"blur(20px)", WebkitBackdropFilter:"blur(20px)",
+        borderTop:"1px solid " + T.border,
+        paddingBottom:"env(safe-area-inset-bottom, 10px)", zIndex:100 }}>
+        <div style={{ display:"flex" }}>
+          {TABS.map(function(t) {
+            const active = tab === t.id;
+            return (
+              <button key={t.id} onClick={function() { setTab(t.id); }}
+                style={{ flex:1, padding:"10px 2px 8px", border:"none", background:"none",
+                  cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:2,
+                  color:active ? T.blue : T.dim, transition:"color 0.15s",
+                  WebkitTapHighlightColor:"transparent", minWidth:0 }}>
+                <span style={{ fontSize:active ? 20 : 17, lineHeight:1, transition:"font-size 0.15s" }}>
+                  {t.icon}
+                </span>
+                <span style={{ fontSize:active ? 9 : 0, fontFamily:"monospace", fontWeight:700,
+                  letterSpacing:0.5, textTransform:"uppercase", overflow:"hidden",
+                  maxHeight:active ? 14 : 0, transition:"all 0.15s", color:T.blue }}>
+                  {t.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
